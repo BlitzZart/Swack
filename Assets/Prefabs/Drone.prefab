@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1632027554501240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14.5, z: 0}
+  m_LocalPosition: {x: 1.1738002, y: 21.5306, z: 1.3911992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4436610715913364}
@@ -222,8 +222,8 @@ MonoBehaviour:
   maxPower: 500
   heightFixed: 1
   drawPath_Debug: 0
-  drawVelocity_Debug: 1
-  drawPath: 0
+  drawVelocity_Debug: 0
+  drawPath: 1
   showSensor: 0
 --- !u!114 &114215663352695660
 MonoBehaviour:

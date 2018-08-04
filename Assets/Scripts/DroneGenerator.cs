@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class DroneGenerator : MonoBehaviour {
     static bool heightIsFixed = true;
+    static bool directedDrones = false;
+
     private List<Follower> drones;
 
     public static int COLUMS = 0;

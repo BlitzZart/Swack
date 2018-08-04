@@ -21,7 +21,6 @@ public class Follower : MonoBehaviour {
     private LineRenderer m_line;
     private Vector3 smoothTrailPoint;
 
-
     private float rndOffsetAcceleration;
 
     private void Start () {
@@ -43,6 +42,10 @@ public class Follower : MonoBehaviour {
         StartCoroutine(UpdateWithFixedHz(10));
 	}
     private void Update() {
+        // rotate body in velocity directions
+        // !!! don't freeze rotations then  !!!
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_body.velocity), Time.deltaTime * 100);
+
         if (drawVelocity_Debug)
             Debug.DrawRay(transform.position, m_body.velocity / 5, Color.black);
         if (drawPath_Debug) {

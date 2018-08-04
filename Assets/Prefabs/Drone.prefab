@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1632027554501240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6014113, y: 38.268494, z: 2.0459146}
+  m_LocalPosition: {x: 0, y: 14.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4436610715913364}
@@ -205,7 +205,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &114106744750526824
 MonoBehaviour:
@@ -220,10 +220,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeed: 0
   maxPower: 500
-  heightFixed: 0
+  heightFixed: 1
   drawPath_Debug: 0
-  drawVelocity_Debug: 0
-  drawPath: 1
+  drawVelocity_Debug: 1
+  drawPath: 0
   showSensor: 0
 --- !u!114 &114215663352695660
 MonoBehaviour:

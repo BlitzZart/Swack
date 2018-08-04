@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ee02594a4bae44990c6934b9ba3286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSpheres: []
+  modelRenderer: {fileID: 23173319752072936}
 --- !u!114 &114325343444633354
 MonoBehaviour:
   m_ObjectHideFlags: 1

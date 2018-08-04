@@ -2,17 +2,17 @@
 
 public class DroneBody : MonoBehaviour {
     private SphereCollider sphere;
-    public Collider[] allSpheres;
+    public Renderer modelRenderer;
 
     private void Start() {
-        GetComponentInChildren<Renderer>().material.color = Color.cyan;
+        //modelRenderer.material.color = Color.cyan;
     }
 
     private void OnCollisionEnter(Collision collision) {
         DroneBody d = collision.gameObject.GetComponentInChildren<DroneBody>();
         if (d != null) {
             print("WARNING: Collision occured!");
-            GetComponentInChildren<Renderer>().material.color = Color.red;
+            modelRenderer.material.color = Color.red;
         }
     }
 }

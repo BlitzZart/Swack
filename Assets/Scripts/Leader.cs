@@ -11,26 +11,29 @@ public class Leader : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKey(KeyCode.W)) {
-            transform.Translate(0, 0, speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.UpArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+            transform.Translate(0, speed * Time.deltaTime, 0); // UP
+        }
+        else if (Input.GetKey(KeyCode.UpArrow)) {
+            transform.Translate(0, 0, speed * Time.deltaTime); // BACK
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+            transform.Translate(0, -speed * Time.deltaTime, 0);// DOWN
+        }
+        else if (Input.GetKey(KeyCode.DownArrow)) {
+            transform.Translate(0, 0, -speed * Time.deltaTime);// FORWARD
+        }
+
+
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            transform.Translate(-speed * Time.deltaTime, 0, 0); // LEFT
         }
         else
-        if (Input.GetKey(KeyCode.S)) {
-            transform.Translate(0, 0, -speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            transform.Translate(speed * Time.deltaTime, 0, 0); // RIGHT
         }
-        if (Input.GetKey(KeyCode.A)) {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
-        }
-        else
-        if (Input.GetKey(KeyCode.D)) {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.R)) {
-            transform.Translate(0, speed * Time.deltaTime, 0);
-        }
-        else
-        if (Input.GetKey(KeyCode.F)) {
-            transform.Translate(0, -speed * Time.deltaTime, 0);
-        }
+
     }
 }

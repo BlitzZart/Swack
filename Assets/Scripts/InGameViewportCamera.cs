@@ -26,6 +26,8 @@ public class InGameViewportCamera : MonoBehaviour {
     Quaternion qRotation = Quaternion.identity;
 
     void Start() {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         Initialize();
 
         followAttractor = GetComponent<FollowTransform>();

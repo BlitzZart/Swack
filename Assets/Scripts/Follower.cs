@@ -57,11 +57,11 @@ public class Follower : MonoBehaviour {
     private IEnumerator UpdateWithFixedHz(float hz) {
         float dt = 1 / hz;
 
-        float neighborAvoidPrw = 2; // Math.Pow(..., neighborAvoidPrw)
-        float neighborAvoidMult = -0.03f;
+        float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
+        float neighborAvoidMult = -0.005f;
         if (heightFixed) {
             neighborAvoidPrw = 4;
-            neighborAvoidMult = -0.01f;
+            neighborAvoidMult = -0.013f;
         }
 
     yield return new WaitUntil(() => m_sensor.CloseEntities != null);
@@ -96,6 +96,9 @@ public class Follower : MonoBehaviour {
         if (fix) {
             heightFixed = true;
             m_body.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        } else {
+            heightFixed = false;
+            m_body.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
     public void EnablePathDrawing(bool draw) {

@@ -55,19 +55,19 @@ public class DroneGenerator : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKey(KeyCode.Alpha1)) {
-            Restart(1, 1);
-        }
-        else
-        if (Input.GetKey(KeyCode.Alpha2)) {
             Restart(2, 2);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha3)) {
+        if (Input.GetKey(KeyCode.Alpha2)) {
             Restart(5, 5);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha4)) {
+        if (Input.GetKey(KeyCode.Alpha3)) {
             Restart(10, 10);
+        }
+        else
+        if (Input.GetKey(KeyCode.Alpha4)) {
+            Restart(20, 10);
         }
         else
         if (Input.GetKey(KeyCode.Alpha5)) {
@@ -75,7 +75,7 @@ public class DroneGenerator : MonoBehaviour {
         }
         else
         if (Input.GetKey(KeyCode.Alpha6)) {
-            Restart(40, 10);
+            Restart(2, 200);
         }
         else
         if (Input.GetKey(KeyCode.Alpha7)) {

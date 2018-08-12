@@ -15,9 +15,9 @@ public class InGameViewportCamera : MonoBehaviour {
 
     private FollowTransform followAttractor;
 
-    float moveSpeed = 1f;
+    float moveSpeed = 0.75f;
     
-    float roationSpeed = 3.0f;
+    float roationSpeed = 2.0f;
     float scaleSpeed = 20.0f;
 
     Vector3 startPosition;
@@ -26,8 +26,8 @@ public class InGameViewportCamera : MonoBehaviour {
     Quaternion qRotation = Quaternion.identity;
 
     void Start() {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
         Initialize();
 
         followAttractor = GetComponent<FollowTransform>();

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.73023504, g: 0.7889821, b: 0.8498593, a: 1}
+  m_IndirectSpecularColor: {r: 0.7288438, g: 0.7874474, b: 0.84912217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -181,11 +181,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Toggle UI\n\tEscape\n\nMove attractor\n\tArrow Keys (Hold Shift for altitude)\n\nToggle
-    debug visualization\n\tR,T\n\nToggle camera: space\nLocked camera\n\tW, S: Zoom\n\tA,
-    D : Pivot\n\nFree camera\n\tW,A,S,D: Move\n\tMouse (+Keys)\n\nLoad drone sets:
-    1,2,3,4,5,6,7,8\nLoad with fixed height:\n\tHold Shift (1,2,3, ...)\n\nToggle
-    fixed height on the fly\n\tReturn"
+  m_Text: "Toggle UI\n\tTabulator\n\nMove attractor\n\tArrow Keys (Hold Shift for
+    altitude)\n\nToggle debug visualization\n\tR,T\n\nToggle camera: space\nLocked
+    camera\n\tW, S: Zoom\n\tA, D : Pivot\n\nFree camera\n\tW,A,S,D: Move\n\tMouse
+    (+Keys)\n\nLoad drone sets: 1,2,3,4,5,6,7,8\nLoad with fixed height:\n\tHold Shift
+    (1,2,3, ...)\n\nToggle fixed height on the fly\n\tReturn"
 --- !u!222 &80155665
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 114106744750526824, guid: 2537631523e16984198b76459e11a74e, type: 2}
-  colums: 40
+  colums: 20
   rows: 10
   offset: 2
   startPos: {x: -40, y: 0, z: 10}
@@ -917,3 +917,58 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1714197411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1714197414}
+  - component: {fileID: 1714197413}
+  - component: {fileID: 1714197412}
+  m_Layer: 0
+  m_Name: ScreenShooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1714197412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1714197411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2269fc8003776fa439aa93ac9186a8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 282840813}
+  thePainting: {fileID: 0}
+  thePaintingRT: {fileID: 0}
+--- !u!114 &1714197413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1714197411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8890278c5351a42bae9e82ed1ad2ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1714197414
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1714197411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.7561035, y: -1.3929291, z: -21.850185}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

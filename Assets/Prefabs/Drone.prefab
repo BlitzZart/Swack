@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23932198886694178}
   - component: {fileID: 135224669718380016}
   - component: {fileID: 114325343444633354}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   drawPath_Debug: 0
   drawVelocity_Debug: 0
   drawPath: 1
-  showSensor: 0
+  showSensor: 1
 --- !u!114 &114215663352695660
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -35,7 +35,7 @@ public class Follower : MonoBehaviour {
 
         if (!showSensor)
             m_sensor.GetComponent<Renderer>().enabled = false;
-        rndOffsetAcceleration = Random.Range(0.01f, 10.0f);
+        rndOffsetAcceleration = Random.Range(0.0f, 10.0f);
 
         FixHeight(heightFixed);
 

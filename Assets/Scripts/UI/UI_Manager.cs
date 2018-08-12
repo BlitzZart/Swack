@@ -11,7 +11,7 @@ public class UI_Manager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
             showUI = !showUI;
             foreach (Text item in texts)
                 item.enabled = showUI;

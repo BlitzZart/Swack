@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Follower : MonoBehaviour {
     [SerializeField]
     private float currentSpeed;
 
-    public float chck;
+    public DateTime chck;
 
     public int ID;
 
@@ -45,7 +47,7 @@ public class Follower : MonoBehaviour {
 
         if (!showSensor)
             m_sensor.GetComponent<Renderer>().enabled = false;
-        rndOffsetAcceleration = Random.Range(0.0f, 10.0f);
+        rndOffsetAcceleration = UnityEngine.Random.Range(0.0f, 10.0f);
 
         FixHeight(heightFixed);
 
@@ -57,10 +59,10 @@ public class Follower : MonoBehaviour {
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_body.velocity), Time.deltaTime * 100);
 
         if (drawVelocity_Debug)
-            Debug.DrawRay(transform.position, m_body.velocity / 5, Color.black);
+            UnityEngine.Debug.DrawRay(transform.position, m_body.velocity / 5, Color.black);
 
         if (drawPath_Debug) {
-            Debug.DrawLine(transform.position, m_lastPosition, Color.gray, 0.66f);
+            UnityEngine.Debug.DrawLine(transform.position, m_lastPosition, Color.gray, 0.66f);
         }
 
         if (drawLineToTarget) {
@@ -83,10 +85,10 @@ public class Follower : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => m_sensor.CloseEntities != null);
-        float elapsed;
+        //Stopwatch sw = new Stopwatch();
         while (true) {
-            elapsed = Time.realtimeSinceStartup;
-            chck = Time.realtimeSinceStartup;
+            //sw.Reset();
+            //sw.Start();
             float acc = 0;
             Vector3 dir = Vector3.zero;
 
@@ -100,12 +102,10 @@ public class Follower : MonoBehaviour {
             dir += (m_target.transform.position - transform.position).normalized;
             acc += (m_target.transform.position - transform.position).magnitude * 25;
 
-            m_body.AddForce(dir * Mathf.Min(acc, maxPower) * dt + Vector3.one * rndOffsetAcceleration);
+            m_body.AddForce(dir * Mathf.Min(acc, maxPower) * /*(float)*/dt + Vector3.one * rndOffsetAcceleration);
             currentSpeed = m_body.velocity.magnitude;
-            // fix timestep
-            elapsed = Time.realtimeSinceStartup - elapsed;
-            yield return new WaitForSeconds(dt - elapsed);
-            chck = Time.realtimeSinceStartup - chck;
+            // TODO: fix timestep - not active!
+            yield return new WaitForSeconds(/*(float)(*/dt/* - sw.Elapsed.TotalSeconds)*/);
         }
     }
 

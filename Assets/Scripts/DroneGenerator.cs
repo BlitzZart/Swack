@@ -22,8 +22,13 @@ public class DroneGenerator : MonoBehaviour {
 	void Start () {
         if (heightIsFixed) {
             prefab.heightFixed = true;
-            Transform leader = FindObjectOfType<Leader>().transform;
-            leader.position = new Vector3(leader.position.x, 0, leader.position.z);
+            Leader[] leaders = FindObjectsOfType<Leader>();
+
+            foreach (Leader leader in leaders) {
+                leader.transform.position = new Vector3(leader.transform.position.x, 0, leader.transform.position.z);
+            }
+
+
         } else {
             prefab.heightFixed = false;
         }
@@ -42,10 +47,16 @@ public class DroneGenerator : MonoBehaviour {
 
         startPos = new Vector3(-colums / 2 * offset, 0, rows / 2 * offset);
 
+        int idCount = 0;
+
 		for (int c = 0; c < colums; c++) {
             for (int r = 0; r < rows; r++) {
-                drones.Add(Instantiate(prefab, startPos + nextPos, Quaternion.identity));
+                Follower f = Instantiate(prefab, startPos + nextPos, Quaternion.identity);
+                drones.Add(f);
                 nextPos.z -= offset;
+                f.ID = idCount++;
+                f.name = f.ID.ToString();
+                f.HardcodedCustomLeaderAssignment();
             }
 
             nextPos.z = 0;

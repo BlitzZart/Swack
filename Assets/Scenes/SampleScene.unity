@@ -1200,9 +1200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 114106744750526824, guid: 2537631523e16984198b76459e11a74e, type: 2}
-  colums: 20
+  colums: 10
   rows: 10
-  offset: 5
+  offset: 3
   startPos: {x: -40, y: 0, z: 10}
 --- !u!4 &1670628524
 Transform:

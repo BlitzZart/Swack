@@ -2,15 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// can be controlled via key input
+/// is default target for drones (followers) - if not set to other tartet
+/// </summary>
 public class Leader : MonoBehaviour {
+
+    private Color idleColor, markedColor;
+    private Renderer leaderRenderer;
+
+    public int ID;
+    public bool marked;
 
     private float speed = 25;
 
     void Start() {
+        leaderRenderer = GetComponentInChildren<Renderer>();
+        idleColor = leaderRenderer.material.color;
 
+        markedColor = new Color(0, 1, 0, idleColor.a);
+        LeaderMarker.LeaderMarkedEvent += OnMarked;
+    }
+
+    private void OnDestroy() {
+        LeaderMarker.LeaderMarkedEvent -= OnMarked;
     }
 
     void Update() {
+        if (!marked)
+            return;
 
         if (Input.GetKey(KeyCode.UpArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
             transform.Translate(0, speed * Time.deltaTime, 0); // UP
@@ -35,5 +55,20 @@ public class Leader : MonoBehaviour {
             transform.Translate(speed * Time.deltaTime, 0, 0); // RIGHT
         }
 
+    }
+
+    private void OnMarked(Leader target) {
+        if (target == this) {
+            if (!marked) {
+                leaderRenderer.material.color = markedColor;
+                marked = true;
+            }
+        }
+        else {
+            if (marked) {
+                leaderRenderer.material.color = idleColor;
+                marked = false;
+            }
+        }
     }
 }

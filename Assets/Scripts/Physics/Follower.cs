@@ -6,14 +6,19 @@ public class Follower : MonoBehaviour {
     [SerializeField]
     private float currentSpeed;
 
+    public float chck;
+
+    public int ID;
+
     public float maxPower = 1000;
     public bool heightFixed = false;
     public bool drawPath_Debug = false;
     public bool drawVelocity_Debug = false;
     public bool drawPath = false;
+    public bool drawLineToTarget = false;
 
     public bool showSensor;
-    private Leader m_leader;
+    private Transform m_target;
     private Sensor m_sensor;
     private float m_sensorRadius;
     private Rigidbody m_body;
@@ -25,7 +30,12 @@ public class Follower : MonoBehaviour {
 
     private void Start () {
         m_line = GetComponent<LineRenderer>();
-        m_leader = FindObjectOfType<Leader>();
+
+        // standard assignment with only one leader in scene
+        //if (m_target == null)
+        //    m_target = FindObjectOfType<Leader>().transform;
+
+
         m_sensor = GetComponentInChildren<Sensor>();
         m_sensorRadius = m_sensor.GetComponent<SphereCollider>().radius * m_sensor.transform.localScale.x;
         m_body = GetComponent<Rigidbody>();
@@ -48,11 +58,16 @@ public class Follower : MonoBehaviour {
 
         if (drawVelocity_Debug)
             Debug.DrawRay(transform.position, m_body.velocity / 5, Color.black);
+
         if (drawPath_Debug) {
             Debug.DrawLine(transform.position, m_lastPosition, Color.gray, 0.66f);
         }
-        if (drawPath) {
-            UpdateLineRenerer();
+
+        if (drawLineToTarget) {
+            UpdateLineRenererTarget();
+        }
+        else if (drawPath) {
+            UpdateLineRenererTrail();
         }
         m_lastPosition = transform.position;
     }
@@ -67,31 +82,42 @@ public class Follower : MonoBehaviour {
             neighborAvoidMult = -0.013f;
         }
 
-    yield return new WaitUntil(() => m_sensor.CloseEntities != null);
+        yield return new WaitUntil(() => m_sensor.CloseEntities != null);
+        float elapsed;
         while (true) {
+            elapsed = Time.realtimeSinceStartup;
+            chck = Time.realtimeSinceStartup;
             float acc = 0;
             Vector3 dir = Vector3.zero;
 
             foreach (Transform item in m_sensor.CloseEntities) {
-                Vector3 dirFollowerers = item.transform.position - transform.position;
-                if (dirFollowerers.magnitude < (2 * m_sensorRadius)) {
-                    dir += dirFollowerers.normalized * Mathf.Pow((dirFollowerers.magnitude - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
+                Vector3 dirFollowerer = item.transform.position - transform.position;
+                float mag = dirFollowerer.magnitude;
+                if (mag < (2 * m_sensorRadius)) {
+                    dir += dirFollowerer.normalized * Mathf.Pow((mag - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
                 }
             }
-            dir += (m_leader.transform.position - transform.position).normalized;
-            acc += (m_leader.transform.position - transform.position).magnitude * 25;
+            dir += (m_target.transform.position - transform.position).normalized;
+            acc += (m_target.transform.position - transform.position).magnitude * 25;
 
             m_body.AddForce(dir * Mathf.Min(acc, maxPower) * dt + Vector3.one * rndOffsetAcceleration);
             currentSpeed = m_body.velocity.magnitude;
-
-            yield return new WaitForSeconds(dt);
+            // fix timestep
+            elapsed = Time.realtimeSinceStartup - elapsed;
+            yield return new WaitForSeconds(dt - elapsed);
+            chck = Time.realtimeSinceStartup - chck;
         }
     }
 
-    private void UpdateLineRenerer() {
+    private void UpdateLineRenererTrail() {
         smoothTrailPoint = Vector3.Lerp(smoothTrailPoint, m_lastPosition + (transform.position - m_lastPosition), Time.deltaTime * 5);
         m_line.SetPosition(0, transform.position);
         m_line.SetPosition(1,  smoothTrailPoint);
+
+    }
+    private void UpdateLineRenererTarget() {
+        m_line.SetPosition(0, transform.position);
+        m_line.SetPosition(1, m_target.transform.position);
 
     }
 
@@ -112,4 +138,26 @@ public class Follower : MonoBehaviour {
         showSensor = draw;
         m_sensor.GetComponent<Renderer>().enabled = showSensor;
     }
+
+    /// <summary>
+    /// sets drone to traget with same ID if available
+    /// </summary>
+    /// <param name="f"></param>
+    public void HardcodedCustomLeaderAssignment() {
+        Leader[] leaders = FindObjectsOfType<Leader>();
+
+        foreach (Leader l in leaders) {
+            if (l.ID == ID)
+                m_target = l.transform;
+        }
+        // founde one
+        if (m_target)
+            return;
+
+        foreach (Leader l in leaders) {
+            if (l.ID == 0)
+                m_target = l.transform;
+        }
+    }
+
 }

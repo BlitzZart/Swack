@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 114215663352695660}
   - component: {fileID: 135660787310590050}
   - component: {fileID: 120605902270630486}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1632027554501240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1738002, y: 21.5306, z: 1.3911992}
+  m_LocalPosition: {x: 78.14585, y: 50.046547, z: -58.15618}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4436610715913364}
@@ -90,7 +90,7 @@ Transform:
   m_GameObject: {fileID: 1593406751268578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 4107986585915252}
   m_RootOrder: 0
@@ -103,7 +103,7 @@ Transform:
   m_GameObject: {fileID: 1434530541664812}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 4107986585915252}
   m_RootOrder: 1
@@ -116,7 +116,7 @@ MeshRenderer:
   m_GameObject: {fileID: 1593406751268578}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -191,7 +191,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1593406751268578}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 29da9cfdd5624194e80cec28f09e7891, type: 3}
 --- !u!54 &54161997557146852
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -219,11 +219,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed: 0
+  chck: 0
+  ID: 0
   maxPower: 500
   heightFixed: 1
   drawPath_Debug: 0
   drawVelocity_Debug: 0
   drawPath: 1
+  drawLineToTarget: 1
   showSensor: 1
 --- !u!114 &114215663352695660
 MonoBehaviour:
@@ -294,7 +297,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.40625
+        value: 0.19616699
         inSlope: -0.14460786
         outSlope: -0.14460786
         tangentMode: 0

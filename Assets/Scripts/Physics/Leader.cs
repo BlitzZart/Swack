@@ -1,4 +1,5 @@
-﻿ using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Leader : MonoBehaviour {
 
     private Color idleColor, markedColor;
     private Renderer leaderRenderer;
+    private Vector3 oldPos;
 
     public int ID;
     public bool marked;
@@ -22,15 +24,22 @@ public class Leader : MonoBehaviour {
 
         markedColor = new Color(0, 1, 0, idleColor.a);
         LeaderMarker.LeaderMarkedEvent += OnMarked;
+        LeaderMarker.LeaderDraggedEvent += OnDragged;
     }
 
     private void OnDestroy() {
         LeaderMarker.LeaderMarkedEvent -= OnMarked;
+        LeaderMarker.LeaderDraggedEvent -= OnDragged;
     }
 
     void Update() {
-        if (!marked)
+        if (!marked) {
             return;
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            oldPos = transform.position;
+        }
 
         if (Input.GetKey(KeyCode.UpArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
             transform.Translate(0, speed * Time.deltaTime, 0); // UP
@@ -56,6 +65,14 @@ public class Leader : MonoBehaviour {
         }
 
     }
+
+    private void OnDragged(Vector3 target) {
+        if (!marked) {
+            return;
+        }
+        transform.position = target;
+    }
+
 
     private void OnMarked(Leader target) {
         if (target == this) {

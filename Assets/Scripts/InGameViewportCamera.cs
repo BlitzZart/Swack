@@ -34,12 +34,15 @@ public class InGameViewportCamera : MonoBehaviour {
     }
 
     void Update() {
+        if (Input.GetKey(KeyCode.LeftShift))
+            return;
+
         Vector3 translation = Vector3.zero;
         Vector3 rotation = Vector3.zero;
 
         // zoom
         if (Input.GetAxis("Mouse ScrollWheel") != 0) {
-            translation += new Vector3(0, 0, Input.GetAxis("Mouse ScrollWheel") * scaleSpeed);
+        translation += new Vector3(0, 0, Input.GetAxis("Mouse ScrollWheel") * scaleSpeed);
         }
         if (Input.GetMouseButton(2)) {
             translation = new Vector3(0, 0, -Input.GetAxis("Mouse Y") * moveSpeed);

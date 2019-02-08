@@ -7,8 +7,10 @@ using UnityEngine;
 public class Follower : MonoBehaviour {
     [SerializeField]
     private float currentSpeed;
-
-    public DateTime chck;
+    [SerializeField]
+    private double deltaTime;
+    [SerializeField]
+    private float strength;
 
     public int ID;
 
@@ -34,8 +36,8 @@ public class Follower : MonoBehaviour {
         m_line = GetComponent<LineRenderer>();
 
         // standard assignment with only one leader in scene
-        //if (m_target == null)
-        //    m_target = FindObjectOfType<Leader>().transform;
+        if (m_target == null)
+            m_target = FindObjectOfType<Leader>().transform;
 
 
         m_sensor = GetComponentInChildren<Sensor>();
@@ -47,11 +49,11 @@ public class Follower : MonoBehaviour {
 
         if (!showSensor)
             m_sensor.GetComponent<Renderer>().enabled = false;
-        rndOffsetAcceleration = UnityEngine.Random.Range(0.0f, 10.0f);
+        rndOffsetAcceleration = UnityEngine.Random.Range(-2.0f, 2.0f);
 
         FixHeight(heightFixed);
 
-        StartCoroutine(UpdateWithFixedHz(10));
+        StartCoroutine(UpdateWithFixedHz(50));
 	}
     private void Update() {
         // rotate body in velocity directions
@@ -75,7 +77,7 @@ public class Follower : MonoBehaviour {
     }
 
     private IEnumerator UpdateWithFixedHz(float hz) {
-        float dt = 1 / hz;
+        double dt = 1 / hz;
 
         float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
         float neighborAvoidMult = -0.005f;
@@ -85,10 +87,11 @@ public class Follower : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => m_sensor.CloseEntities != null);
-        //Stopwatch sw = new Stopwatch();
+        Stopwatch sw = new Stopwatch();
         while (true) {
-            //sw.Reset();
-            //sw.Start();
+            deltaTime = sw.Elapsed.TotalSeconds;
+            sw.Reset();
+            sw.Start();
             float acc = 0;
             Vector3 dir = Vector3.zero;
 
@@ -97,15 +100,17 @@ public class Follower : MonoBehaviour {
                 float mag = dirFollowerer.magnitude;
                 if (mag < (2 * m_sensorRadius)) {
                     dir += dirFollowerer.normalized * Mathf.Pow((mag - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
+                    strength = dir.magnitude;
                 }
             }
             dir += (m_target.transform.position - transform.position).normalized;
-            acc += (m_target.transform.position - transform.position).magnitude * 25;
+            acc += (m_target.transform.position - transform.position).magnitude * 25 + rndOffsetAcceleration;
 
-            m_body.AddForce(dir * Mathf.Min(acc, maxPower) * /*(float)*/dt + Vector3.one * rndOffsetAcceleration);
+            m_body.AddForce(dir * Mathf.Min(acc, maxPower) * (float)dt);
             currentSpeed = m_body.velocity.magnitude;
             // TODO: fix timestep - not active!
-            yield return new WaitForSeconds(/*(float)(*/dt/* - sw.Elapsed.TotalSeconds)*/);
+
+            yield return new WaitUntil(() => sw.Elapsed.TotalSeconds >= dt);
         }
     }
 
@@ -137,6 +142,11 @@ public class Follower : MonoBehaviour {
     public void EnableSensorRangeDrawing(bool draw) {
         showSensor = draw;
         m_sensor.GetComponent<Renderer>().enabled = showSensor;
+    }
+
+    public void AssignLeader(Leader leader)
+    {
+        m_target = leader.transform;
     }
 
     /// <summary>

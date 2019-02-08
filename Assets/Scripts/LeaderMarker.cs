@@ -56,7 +56,7 @@ public class LeaderMarker : MonoBehaviour {
             return;
         }
         dragStartPos = hitInfo.point;
-        print("DP " + hitInfo.collider.name);
+        //print("DP " + hitInfo.collider.name);
 
         markedLeader = hitInfo.collider.GetComponent<Leader>();
         LeaderMarkedEvent(markedLeader);

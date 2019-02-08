@@ -58,16 +58,16 @@ public class InGameViewportCamera : MonoBehaviour {
         if (!followAttractor.IsFollowing) {
             // translate
             if (Input.GetKey(upKey)) {
-                translation += new Vector3(0, 0, moveSpeed);
+                translation += new Vector3(0, 0, moveSpeed) * Time.deltaTime * 50;
             }
             else if (Input.GetKey(downKey)) {
-                translation += new Vector3(0, 0, -moveSpeed);
+                translation += new Vector3(0, 0, -moveSpeed * Time.deltaTime * 50);
             }
             if (Input.GetKey(leftKey)) {
-                translation += new Vector3(-moveSpeed, 0, 0);
+                translation += new Vector3(-moveSpeed * Time.deltaTime * 50, 0, 0);
             }
             else if (Input.GetKey(rightKey)) {
-                translation += new Vector3(moveSpeed, 0, 0);
+                translation += new Vector3(moveSpeed * Time.deltaTime * 50, 0, 0);
             }
             //else if (Input.GetKey(reset)) {
             //    transform.position = startPosition;

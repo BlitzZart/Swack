@@ -1,17 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DroneGenerator : MonoBehaviour {
     static bool heightIsFixed = true;
     static bool directedDrones = false;
+    static bool singleTarget = false;
+
+    public Leader leitHammel;
 
     private List<Follower> drones;
+    private List<Leader> leaders;
+    private static System.Random shuffleRnd = new System.Random();
 
     public static int COLUMS = 0;
     public static int ROWS = 0;
 
-    public Follower prefab;
+    public Follower dronePrefab;
+    public Leader leaderPrefab;
     public int colums = 10;
     public int rows = 10;
     public float offset = 1.5f;
@@ -21,7 +28,7 @@ public class DroneGenerator : MonoBehaviour {
 
 	void Start () {
         if (heightIsFixed) {
-            prefab.heightFixed = true;
+            dronePrefab.heightFixed = true;
             Leader[] leaders = FindObjectsOfType<Leader>();
 
             foreach (Leader leader in leaders) {
@@ -30,10 +37,11 @@ public class DroneGenerator : MonoBehaviour {
 
 
         } else {
-            prefab.heightFixed = false;
+            dronePrefab.heightFixed = false;
         }
 
         drones = new List<Follower>();
+        leaders = new List<Leader>();
         if (COLUMS != 0) {
             colums = COLUMS;
         } else {
@@ -49,14 +57,33 @@ public class DroneGenerator : MonoBehaviour {
 
         int idCount = 0;
 
-		for (int c = 0; c < colums; c++) {
+        GameObject droneHolder = new GameObject();
+        droneHolder.name = "DroneHolder";
+        GameObject targetHolder = new GameObject();
+        targetHolder.name = "TargetHolder";
+
+        for (int c = 0; c < colums; c++) {
             for (int r = 0; r < rows; r++) {
-                Follower f = Instantiate(prefab, startPos + nextPos, Quaternion.identity);
+                Follower f = Instantiate(dronePrefab, startPos + nextPos, Quaternion.identity);
+                f.transform.parent = droneHolder.transform;
+
+                Leader l = Instantiate(leaderPrefab, startPos + nextPos, Quaternion.identity);
+                l.transform.parent = targetHolder.transform;
+                l.ID = idCount;
+                l.name = "Leader " + l.ID.ToString();
+                leaders.Add(l);
+                if (!heightIsFixed)
+                    l.transform.Translate(0, 10, 0);
+
                 drones.Add(f);
+
                 nextPos.z -= offset;
                 f.ID = idCount++;
-                f.name = f.ID.ToString();
-                f.HardcodedCustomLeaderAssignment();
+                f.name = "Drone " + f.ID.ToString();
+
+
+                f.AssignLeader(l);
+                //f.HardcodedCustomLeaderAssignment();
             }
 
             nextPos.z = 0;
@@ -94,19 +121,87 @@ public class DroneGenerator : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
-            foreach (Follower item in drones) {
-                item.EnablePathDrawing(!item.drawPath);
-            }
+            ToggleSensorVisualization();
         }
         if (Input.GetKeyDown(KeyCode.T)) {
-            foreach (Follower item in drones) {
-                item.EnableSensorRangeDrawing(!item.showSensor);
-            }
+            ToggleTragetLineVisualization();
         }
         if (Input.GetKeyDown(KeyCode.Return)) {
-            heightIsFixed = !heightIsFixed;
-            foreach (Follower item in drones)
-                item.FixHeight(heightIsFixed);
+            ToggleFixedHeight();
+        }
+        if (Input.GetKeyDown(KeyCode.U)) {
+            ShuffleLeaders();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleSingleMultiTargets();
+        }
+    }
+
+    public void ToggleFixedHeight()
+    {
+        heightIsFixed = !heightIsFixed;
+        foreach (Follower item in drones)
+            item.FixHeight(heightIsFixed);
+    }
+
+    public void ToggleTragetLineVisualization()
+    {
+        foreach (Follower item in drones)
+        {
+            item.EnablePathDrawing(!item.drawPath);
+        }
+    }
+
+    public void ToggleSensorVisualization()
+    {
+        foreach (Follower item in drones)
+        {
+            item.EnableSensorRangeDrawing(!item.showSensor);
+        }
+    }
+
+    public void ToggleSingleMultiTargets()
+    {
+        singleTarget = !singleTarget;
+        if (singleTarget)
+        {
+            foreach(Follower f in drones)
+            {
+                f.AssignLeader(leitHammel);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < leaders.Count; i++)
+            {
+                drones[i].AssignLeader(leaders[i]);
+            }
+        }
+
+               
+    }
+
+    public void ShuffleLeaders()
+    {
+        singleTarget = false;
+        Shuffle(leaders);
+        for (int i = 0; i < leaders.Count; i++)
+        {
+            drones[i].AssignLeader(leaders[i]);
+        }
+    }
+
+    private void Shuffle(List<Leader> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = shuffleRnd.Next(n + 1);
+            Leader value = list[k];
+            list[k] = list[n];
+            list[n] = value;
         }
     }
 

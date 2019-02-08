@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour {
-    private Text[] texts;
+    private MaskableGraphic[] texts;
     private bool showUI = true;
     private void Start() {
-        texts = GetComponentsInChildren<Text>();
+        texts = GetComponentsInChildren<MaskableGraphic>();
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Tab)) {
             showUI = !showUI;
-            foreach (Text item in texts)
+            foreach (MaskableGraphic item in texts)
                 item.enabled = showUI;
         }
     }

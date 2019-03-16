@@ -34,3 +34,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Large file in Wispy Skybox
+Wispy Sky/Extras/

@@ -7,10 +7,15 @@ using UnityEngine;
 public class Follower : MonoBehaviour {
     [SerializeField]
     private float currentSpeed;
-    [SerializeField]
-    private double deltaTime;
+    //[SerializeField]
+    //private double deltaTime;
     [SerializeField]
     private float strength;
+    [SerializeField]
+    private float targetAttraction;
+    [SerializeField]
+    private float weakenWhenCloseFactor;
+
 
     public int ID;
 
@@ -30,6 +35,7 @@ public class Follower : MonoBehaviour {
     private LineRenderer m_line;
     private Vector3 smoothTrailPoint;
 
+    // used to generate diveristy
     private float rndOffsetAcceleration;
 
     private void Start () {
@@ -53,7 +59,7 @@ public class Follower : MonoBehaviour {
 
         FixHeight(heightFixed);
 
-        StartCoroutine(UpdateWithFixedHz(50));
+        //StartCoroutine(UpdateWithFixedHz(50));
 	}
     private void Update() {
         // rotate body in velocity directions
@@ -73,7 +79,59 @@ public class Follower : MonoBehaviour {
         else if (drawPath) {
             UpdateLineRenererTrail();
         }
+
+        UpdateForces();
+
+
+
         m_lastPosition = transform.position;
+    }
+
+    private void UpdateForces()
+    {
+
+        float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
+        float neighborAvoidMult = -0.013f;
+        if (heightFixed)
+        {
+            neighborAvoidPrw = 4;
+            neighborAvoidMult = -0.013f;
+        }
+
+        targetAttraction = 0;
+        Vector3 repulseDir = Vector3.zero;
+
+        foreach (Transform item in m_sensor.CloseEntities)
+        {
+            Vector3 dirFollowerer = item.transform.position - transform.position;
+            float mag = dirFollowerer.magnitude;
+            if (mag < (2 * m_sensorRadius))
+            {
+                repulseDir += dirFollowerer.normalized * Mathf.Pow((mag - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
+                strength = repulseDir.magnitude;
+            }
+        }
+
+        float targetDistance = Vector3.Distance(m_target.transform.position, transform.position);
+
+        repulseDir += (m_target.transform.position - transform.position).normalized;
+
+        // weaken attraction to target if closer than x meter
+        weakenWhenCloseFactor = Mathf.Clamp(targetDistance / 5.0f, 0.5f, 1.0f);
+
+        // minTargetAttraction helps to approach faster
+        float minTargetAttraction = 0;
+        if (targetDistance > 0.5f)
+        {
+            minTargetAttraction = 20.0f;
+        }
+
+        targetAttraction += Mathf.Max(targetDistance * 25 * weakenWhenCloseFactor + rndOffsetAcceleration, minTargetAttraction);
+
+        m_body.AddForce(repulseDir * Mathf.Min(targetAttraction, maxPower) * Time.deltaTime );
+        currentSpeed = m_body.velocity.magnitude;
+        // TODO: fix timestep - not active!
+
     }
 
     private IEnumerator UpdateWithFixedHz(float hz) {
@@ -89,7 +147,7 @@ public class Follower : MonoBehaviour {
         yield return new WaitUntil(() => m_sensor.CloseEntities != null);
         Stopwatch sw = new Stopwatch();
         while (true) {
-            deltaTime = sw.Elapsed.TotalSeconds;
+            //deltaTime = sw.Elapsed.TotalSeconds;
             sw.Reset();
             sw.Start();
             float acc = 0;

@@ -103,7 +103,7 @@ Transform:
   m_GameObject: {fileID: 1434530541664812}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 4107986585915252}
   m_RootOrder: 1
@@ -219,11 +219,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed: 0
-  deltaTime: 0
   strength: 0
+  targetAttraction: 0
+  minTargetAttraction: 100
+  weakenWhenCloseFactor: 0
   ID: 0
-  maxPower: 500
-  heightFixed: 0
+  maxPower: 400
+  heightFixed: 1
   drawPath_Debug: 0
   drawVelocity_Debug: 0
   drawPath: 1

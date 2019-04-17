@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DroneGenerator : MonoBehaviour {
+public class DroneGenerator : Follower {
     static bool heightIsFixed = true;
     static bool directedDrones = false;
     static bool singleTarget = false;
@@ -62,6 +62,14 @@ public class DroneGenerator : MonoBehaviour {
         GameObject targetHolder = new GameObject();
         targetHolder.name = "TargetHolder";
 
+        bool isCentralized = false;
+        if (dronePrefab.GetType() == typeof(CentralizedDrone))
+        {
+            isCentralized = true;
+        }
+
+        CentralProcessor cp = FindObjectOfType<CentralProcessor>();
+
         for (int c = 0; c < colums; c++) {
             for (int r = 0; r < rows; r++) {
                 Follower f = Instantiate(dronePrefab, startPos + nextPos, Quaternion.identity);
@@ -84,6 +92,13 @@ public class DroneGenerator : MonoBehaviour {
 
                 f.AssignLeader(l);
                 //f.HardcodedCustomLeaderAssignment();
+
+                if (isCentralized)
+                {
+                    CentralizedDrone cd = (CentralizedDrone)f;
+                    cd.SetAttractor(l.transform);
+                    cp.AddDrone(cd);                 
+                }
             }
 
             nextPos.z = 0;
@@ -147,7 +162,7 @@ public class DroneGenerator : MonoBehaviour {
 
     public void ToggleTragetLineVisualization()
     {
-        foreach (Follower item in drones)
+        foreach (AutonomousDrone item in drones)
         {
             item.EnablePathDrawing(!item.drawPath);
         }
@@ -155,7 +170,7 @@ public class DroneGenerator : MonoBehaviour {
 
     public void ToggleSensorVisualization()
     {
-        foreach (Follower item in drones)
+        foreach (AutonomousDrone item in drones)
         {
             item.EnableSensorRangeDrawing(!item.showSensor);
         }

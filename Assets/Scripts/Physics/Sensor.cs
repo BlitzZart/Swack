@@ -19,7 +19,7 @@ public class Sensor : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Follower f = other.GetComponentInParent<Follower>();
+        AutonomousDrone f = other.GetComponentInParent<AutonomousDrone>();
         if (f != null) {
             m_close.Add(f.transform);
             return;
@@ -40,7 +40,7 @@ public class Sensor : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other) {
-        Follower f = other.GetComponentInParent<Follower>();
+        AutonomousDrone f = other.GetComponentInParent<AutonomousDrone>();
         if (f != null) {
             m_close.Remove(f.transform);
             return;

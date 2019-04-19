@@ -6,14 +6,18 @@ public class CentralizedDrone : Follower
 {
     [SerializeField]
     private Vector3 m_repulsion;
+    [SerializeField]
     private Vector3 m_attraction;
+    [SerializeField]
     private Transform m_attractor;
+
+    public float attDist;
 
     public void AddRepulsor(Vector3 repulsorPosition)
     {
         Vector3 repDir = (repulsorPosition - transform.position);
         float repDist = Vector3.Distance(repulsorPosition, transform.position);
-        m_repulsion = m_repulsion + (repDir / Mathf.Pow(repDist, 3));
+        m_repulsion = m_repulsion + (repDir / Mathf.Pow(repDist, 3) * 2.0f);
     }
 
     public void SetAttractor(Transform attractor)
@@ -23,22 +27,19 @@ public class CentralizedDrone : Follower
 
     public void ApplyResault()
     {
-        Vector3 attDir = (m_attractor.position - transform.position).normalized;
-        float attDist = Vector3.Distance(m_attraction, transform.position);
-        m_attraction = attDir;///Mathf.Clamp(attDist, 0.0001f, 1000f);
+        Vector3 attDir = (m_attractor.position - transform.position);
+        attDist = Vector3.Distance(m_attractor.position, transform.position);
+        m_attraction = attDir / (attDist);
 
-        //m_attraction *= 10.0f;
+        Vector3 forceVector = m_attraction - m_repulsion;
 
-        //print("VEL " + m_body.velocity);
+        if (!float.IsNaN(forceVector.x))
+        {
+            //m_body.AddForce(forceVector * 3);
+            transform.Translate(forceVector * 3 * Time.fixedDeltaTime);
+        }
+        Debug.DrawRay(transform.position, forceVector);
 
-        Vector3 force = m_attraction - m_repulsion;
-        //force *= 0.01f;
-
-        transform.Translate(force * Time.fixedDeltaTime);
-
-        //m_body.AddForce(force);
-
-        Debug.DrawRay(transform.position, force);
         // reset
         m_repulsion = Vector3.zero;
         m_attraction = Vector3.zero;

@@ -144,6 +144,9 @@ MonoBehaviour:
   heightFixed: 0
   ID: 0
   m_repulsion: {x: 0, y: 0, z: 0}
+  m_attraction: {x: 0, y: 0, z: 0}
+  m_attractor: {fileID: 0}
+  attDist: 0
 --- !u!114 &114215663352695660
 MonoBehaviour:
   m_ObjectHideFlags: 0

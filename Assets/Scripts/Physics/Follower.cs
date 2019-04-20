@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Follower : MonoBehaviour
 {
-    protected Transform m_target;
+    protected float m_rndAlpha;
+
+    protected Transform m_attractor;
     protected Rigidbody m_body;
 
     public bool heightFixed = false;
@@ -13,11 +15,12 @@ public class Follower : MonoBehaviour
     protected virtual void Start()
     {
         m_body = GetComponent<Rigidbody>();
+        m_rndAlpha = 1.0f;// Random.Range(1.0f, 1.1f); // actually unused
     }
 
-    public void AssignLeader(Leader leader)
+    public void SetAttractor(Leader leader)
     {
-        m_target = leader.transform;
+        m_attractor = leader.transform;
     }
 
     public void FixHeight(bool fix)

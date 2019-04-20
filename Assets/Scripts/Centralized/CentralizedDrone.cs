@@ -8,8 +8,6 @@ public class CentralizedDrone : Follower
     private Vector3 m_repulsion;
     [SerializeField]
     private Vector3 m_attraction;
-    [SerializeField]
-    private Transform m_attractor;
 
     public float attDist;
 
@@ -20,18 +18,13 @@ public class CentralizedDrone : Follower
         m_repulsion = m_repulsion + (repDir / Mathf.Pow(repDist, 3) * 2.0f);
     }
 
-    public void SetAttractor(Transform attractor)
-    {
-        m_attractor = attractor;
-    }
-
     public void ApplyResault()
     {
         Vector3 attDir = (m_attractor.position - transform.position);
         attDist = Vector3.Distance(m_attractor.position, transform.position);
         m_attraction = attDir / (attDist);
 
-        Vector3 forceVector = m_attraction - m_repulsion;
+        Vector3 forceVector = m_attraction - m_repulsion * m_rndAlpha;
 
         if (!float.IsNaN(forceVector.x))
         {

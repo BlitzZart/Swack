@@ -41,8 +41,8 @@ public class AutonomousDrone : Follower {
         m_line = GetComponent<LineRenderer>();
 
         // standard assignment with only one leader in scene
-        if (m_target == null)
-            m_target = FindObjectOfType<Leader>().transform;
+        if (m_attractor == null)
+            m_attractor = FindObjectOfType<Leader>().transform;
 
 
         m_sensor = GetComponentInChildren<Sensor>();
@@ -109,9 +109,9 @@ public class AutonomousDrone : Follower {
             }
         }
 
-        float targetDistance = Vector3.Distance(m_target.transform.position, transform.position);
+        float targetDistance = Vector3.Distance(m_attractor.transform.position, transform.position);
 
-        repulseDir += (m_target.transform.position - transform.position).normalized;
+        repulseDir += (m_attractor.transform.position - transform.position).normalized;
 
         // weaken attraction to target if closer than x meter
         weakenWhenCloseFactor = Mathf.Clamp(targetDistance / 5.0f, 0.5f, 1.0f);
@@ -158,8 +158,8 @@ public class AutonomousDrone : Follower {
                     strength = dir.magnitude;
                 }
             }
-            dir += (m_target.transform.position - transform.position).normalized;
-            acc += (m_target.transform.position - transform.position).magnitude * 25 + rndOffsetAcceleration;
+            dir += (m_attractor.transform.position - transform.position).normalized;
+            acc += (m_attractor.transform.position - transform.position).magnitude * 25 + rndOffsetAcceleration;
 
             m_body.AddForce(dir * Mathf.Min(acc, maxPower) * (float)dt);
             currentSpeed = m_body.velocity.magnitude;
@@ -177,7 +177,7 @@ public class AutonomousDrone : Follower {
     }
     private void UpdateLineRenererTarget() {
         m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1, m_target.transform.position);
+        m_line.SetPosition(1, m_attractor.transform.position);
 
     }
 
@@ -200,15 +200,15 @@ public class AutonomousDrone : Follower {
 
         foreach (Leader l in leaders) {
             if (l.ID == ID)
-                m_target = l.transform;
+                m_attractor = l.transform;
         }
         // founde one
-        if (m_target)
+        if (m_attractor)
             return;
 
         foreach (Leader l in leaders) {
             if (l.ID == 0)
-                m_target = l.transform;
+                m_attractor = l.transform;
         }
     }
 

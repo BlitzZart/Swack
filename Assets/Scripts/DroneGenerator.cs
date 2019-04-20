@@ -90,13 +90,12 @@ public class DroneGenerator : Follower {
                 f.name = "Drone " + f.ID.ToString();
 
 
-                f.AssignLeader(l);
-                //f.HardcodedCustomLeaderAssignment();
+                f.SetAttractor(l);
 
                 if (isCentralized)
                 {
                     CentralizedDrone cd = (CentralizedDrone)f;
-                    cd.SetAttractor(l.transform);
+                    cd.SetAttractor(l);
                     cp.AddDrone(cd);                 
                 }
             }
@@ -183,14 +182,14 @@ public class DroneGenerator : Follower {
         {
             foreach(Follower f in drones)
             {
-                f.AssignLeader(leitHammel);
+                f.SetAttractor(leitHammel);
             }
         }
         else
         {
             for (int i = 0; i < leaders.Count; i++)
             {
-                drones[i].AssignLeader(leaders[i]);
+                drones[i].SetAttractor(leaders[i]);
             }
         }
 
@@ -203,7 +202,7 @@ public class DroneGenerator : Follower {
         Shuffle(leaders);
         for (int i = 0; i < leaders.Count; i++)
         {
-            drones[i].AssignLeader(leaders[i]);
+            drones[i].SetAttractor(leaders[i]);
         }
     }
 

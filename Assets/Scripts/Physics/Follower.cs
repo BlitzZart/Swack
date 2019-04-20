@@ -8,14 +8,26 @@ public class Follower : MonoBehaviour
 
     protected Transform m_attractor;
     protected Rigidbody m_body;
+    protected LineRenderer m_line;
 
+    public bool drawPath = false;
+    public bool drawLineToTarget = false;
     public bool heightFixed = false;
     public int ID;
 
     protected virtual void Start()
     {
+        m_line = GetComponent<LineRenderer>();
         m_body = GetComponent<Rigidbody>();
-        m_rndAlpha = 1.0f;// Random.Range(1.0f, 1.1f); // actually unused
+        m_rndAlpha = Random.Range(0.9f, 1.1f); // actually unused
+    }
+
+    protected virtual void Update()
+    {
+        if (drawLineToTarget)
+        {
+            UpdateLineRenererTarget();
+        }
     }
 
     public void SetAttractor(Leader leader)
@@ -36,5 +48,15 @@ public class Follower : MonoBehaviour
             m_body.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
+    public void EnablePathDrawing(bool draw)
+    {
+        drawPath = draw;
+        m_line.enabled = drawPath;
+    }
 
+    private void UpdateLineRenererTarget()
+    {
+        m_line.SetPosition(0, transform.position);
+        m_line.SetPosition(1, m_attractor.transform.position);
+    }
 }

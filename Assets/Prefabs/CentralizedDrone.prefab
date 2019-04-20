@@ -141,11 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3ba7e47180adf4588772be052c30fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawPath: 0
+  drawLineToTarget: 1
   heightFixed: 0
   ID: 0
   m_repulsion: {x: 0, y: 0, z: 0}
   m_attraction: {x: 0, y: 0, z: 0}
-  m_attractor: {fileID: 0}
   attDist: 0
 --- !u!114 &114215663352695660
 MonoBehaviour:
@@ -221,7 +222,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.19616699
+        value: 0.09780339
         inSlope: -0.14460786
         outSlope: -0.14460786
         tangentMode: 0
@@ -229,8 +230,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.21795075
       - serializedVersion: 3
-        time: 0.9915161
-        value: 0
+        time: 1
+        value: 0.040985107
         inSlope: -0.051216837
         outSlope: -0.051216837
         tangentMode: 0
@@ -242,9 +243,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key1: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -252,7 +253,7 @@ LineRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0

@@ -22,15 +22,13 @@ public class AutonomousDrone : Follower {
 
     public bool drawPath_Debug = false;
     public bool drawVelocity_Debug = false;
-    public bool drawPath = false;
-    public bool drawLineToTarget = false;
+
 
     public bool showSensor;
 
     private Sensor m_sensor;
     private float m_sensorRadius;
     private Vector3 m_lastPosition;
-    private LineRenderer m_line;
     private Vector3 smoothTrailPoint;
 
     // used to generate diveristy
@@ -38,7 +36,6 @@ public class AutonomousDrone : Follower {
 
     protected override void Start () {
         base.Start();
-        m_line = GetComponent<LineRenderer>();
 
         // standard assignment with only one leader in scene
         if (m_attractor == null)
@@ -58,7 +55,8 @@ public class AutonomousDrone : Follower {
 
         //StartCoroutine(UpdateWithFixedHz(50));
 	}
-    private void Update() {
+    protected override void Update() {
+        base.Update();
         // rotate body in velocity directions
         // !!! don't freeze rotations then  !!!
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_body.velocity), Time.deltaTime * 100);
@@ -70,9 +68,6 @@ public class AutonomousDrone : Follower {
             UnityEngine.Debug.DrawLine(transform.position, m_lastPosition, Color.gray, 0.66f);
         }
 
-        if (drawLineToTarget) {
-            UpdateLineRenererTarget();
-        }
         else if (drawPath) {
             UpdateLineRenererTrail();
         }
@@ -175,17 +170,7 @@ public class AutonomousDrone : Follower {
         m_line.SetPosition(1,  smoothTrailPoint);
 
     }
-    private void UpdateLineRenererTarget() {
-        m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1, m_attractor.transform.position);
 
-    }
-
-
-    public void EnablePathDrawing(bool draw) {
-        drawPath = draw;
-        m_line.enabled = drawPath;
-    }
     public void EnableSensorRangeDrawing(bool draw) {
         showSensor = draw;
         m_sensor.GetComponent<Renderer>().enabled = showSensor;

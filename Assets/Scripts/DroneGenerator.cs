@@ -161,7 +161,7 @@ public class DroneGenerator : Follower {
 
     public void ToggleTragetLineVisualization()
     {
-        foreach (AutonomousDrone item in drones)
+        foreach (Follower item in drones)
         {
             item.EnablePathDrawing(!item.drawPath);
         }

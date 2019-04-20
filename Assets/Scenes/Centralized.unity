@@ -2713,6 +2713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa85db37343c0d4ab70679c2ed20394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensorButton: {fileID: 988746200}
 --- !u!1001 &1185175448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3801,6 +3802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4499fed61d3f8ee40b6089e123f0fbed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawPath: 0
+  drawLineToTarget: 0
   heightFixed: 0
   ID: 0
   leitHammel: {fileID: 1705475596}

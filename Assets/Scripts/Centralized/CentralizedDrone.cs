@@ -9,6 +9,11 @@ public class CentralizedDrone : Follower
     [SerializeField]
     private Vector3 m_attraction;
 
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     public float attDist;
 
     public void AddRepulsor(Vector3 repulsorPosition)
@@ -24,7 +29,19 @@ public class CentralizedDrone : Follower
         attDist = Vector3.Distance(m_attractor.position, transform.position);
         m_attraction = attDir / (attDist);
 
-        Vector3 forceVector = m_attraction - m_repulsion * m_rndAlpha;
+        float atTargetRepulsionUpscale = 1;
+        float atTargetAttractionDownscale = 1;
+        if (attDist < 1.0f)
+        {
+            atTargetRepulsionUpscale = Mathf.Clamp(1 / attDist, 1.0f, 1.5f);
+
+            if (attDist < 0.5f)
+            {
+                atTargetAttractionDownscale = Mathf.Clamp(attDist / 2, 0.01f, 1.0f);
+            }
+        }
+
+        Vector3 forceVector = (m_attraction - m_repulsion * m_rndAlpha * atTargetRepulsionUpscale) * atTargetAttractionDownscale;
 
         if (!float.IsNaN(forceVector.x))
         {

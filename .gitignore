@@ -37,3 +37,7 @@ sysinfo.txt
 
 # Large file in Wispy Skybox
 Wispy Sky/Extras/
+
+# ...
+*.psd
+*.exr

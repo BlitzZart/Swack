@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DroneGenerator : Follower {
-    static bool heightIsFixed = true;
+public class DroneGenerator : MonoBehaviour {
+    static bool heightIsFixed = false;
     static bool directedDrones = false;
     static bool singleTarget = false;
 
@@ -26,7 +25,8 @@ public class DroneGenerator : Follower {
     public Vector3 startPos;
     Vector3 nextPos;
 
-	void Start () {
+    #region unity callbacks
+    private void Start () {
         if (heightIsFixed) {
             dronePrefab.heightFixed = true;
             Leader[] leaders = FindObjectsOfType<Leader>();
@@ -151,7 +151,9 @@ public class DroneGenerator : Follower {
             ToggleSingleMultiTargets();
         }
     }
+    #endregion
 
+    #region public
     public void ToggleFixedHeight()
     {
         heightIsFixed = !heightIsFixed;
@@ -205,7 +207,9 @@ public class DroneGenerator : Follower {
             drones[i].SetAttractor(leaders[i]);
         }
     }
+    #endregion
 
+    #region private
     private void Shuffle(List<Leader> list)
     {
         int n = list.Count;
@@ -231,4 +235,5 @@ public class DroneGenerator : Follower {
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    #endregion
 }

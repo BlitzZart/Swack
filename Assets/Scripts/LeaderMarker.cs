@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// LeaderMarker enables selecting and manipulating leader objects
+/// </summary>
 public class LeaderMarker : MonoBehaviour {
     public delegate void LeaderDelegate(Leader target);
     public static event LeaderDelegate LeaderMarkedEvent;
@@ -13,10 +14,6 @@ public class LeaderMarker : MonoBehaviour {
     public LayerMask layerMask;
 
     private Leader markedLeader;
-
-    private void Start() {
-
-    }
 
     private void Update () {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0) && markedLeader) {
@@ -36,7 +33,6 @@ public class LeaderMarker : MonoBehaviour {
             print("--- " + t);
 
             LeaderDraggedEvent(Camera.main.transform.localToWorldMatrix * t);
-
         }
 
         if (!Input.GetMouseButtonDown(0)) {
@@ -56,7 +52,6 @@ public class LeaderMarker : MonoBehaviour {
             return;
         }
         dragStartPos = hitInfo.point;
-        //print("DP " + hitInfo.collider.name);
 
         markedLeader = hitInfo.collider.GetComponent<Leader>();
         LeaderMarkedEvent(markedLeader);

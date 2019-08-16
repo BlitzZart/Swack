@@ -32,7 +32,7 @@ public class Leader : MonoBehaviour {
         LeaderMarker.LeaderDraggedEvent -= OnDragged;
     }
 
-    void Update() {
+    private void Update() {
         if (!marked) {
             return;
         }

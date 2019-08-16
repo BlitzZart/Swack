@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// A simple component which enables viewport orientation to a 3D camera
+/// A simple component which enables in-game navigation with a 3D camera
 /// zoom, move up, down, left, right is applied locally
 /// rotation is applied in worldspace
 /// </summary>
@@ -11,7 +11,6 @@ public class InGameViewportCamera : MonoBehaviour {
     KeyCode downKey = KeyCode.S;
     KeyCode leftKey = KeyCode.A;
     KeyCode rightKey = KeyCode.D;
-    KeyCode reset = KeyCode.Space;
 
     private FollowTransform followAttractor;
 
@@ -69,12 +68,6 @@ public class InGameViewportCamera : MonoBehaviour {
             else if (Input.GetKey(rightKey)) {
                 translation += new Vector3(moveSpeed * Time.deltaTime * 50, 0, 0);
             }
-            //else if (Input.GetKey(reset)) {
-            //    transform.position = startPosition;
-            //    transform.rotation = startRotation;
-
-            //    qRotation = startRotation;
-            //}
         }
         // drag
         if (Input.GetMouseButton(0)) {
@@ -99,6 +92,4 @@ public class InGameViewportCamera : MonoBehaviour {
         startPosition = transform.position;
         startRotation = transform.rotation;
     }
-
-
 }

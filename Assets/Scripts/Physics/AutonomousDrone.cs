@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AutonomousDrone : Follower {
     [SerializeField]
     private float currentSpeed;
-    //[SerializeField]
-    //private double deltaTime;
     [SerializeField]
     private float strength;
     [SerializeField]
@@ -16,13 +10,10 @@ public class AutonomousDrone : Follower {
     [SerializeField]
     private float weakenWhenCloseFactor;
 
-
-
-    public float maxPower = 1000;
+    public float maxPower = 400;
 
     public bool drawPath_Debug = false;
     public bool drawVelocity_Debug = false;
-
 
     public bool showSensor;
 
@@ -52,14 +43,9 @@ public class AutonomousDrone : Follower {
         rndOffsetAcceleration = UnityEngine.Random.Range(-2.0f, 2.0f);
 
         FixHeight(heightFixed);
-
-        //StartCoroutine(UpdateWithFixedHz(50));
 	}
     protected override void Update() {
         base.Update();
-        // rotate body in velocity directions
-        // !!! don't freeze rotations then  !!!
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_body.velocity), Time.deltaTime * 100);
 
         if (drawVelocity_Debug)
             UnityEngine.Debug.DrawRay(transform.position, m_body.velocity / 5, Color.black);
@@ -68,20 +54,13 @@ public class AutonomousDrone : Follower {
             UnityEngine.Debug.DrawLine(transform.position, m_lastPosition, Color.gray, 0.66f);
         }
 
-        else if (drawPath) {
-            UpdateLineRenererTrail();
-        }
-
         UpdateForces();
-
-
 
         m_lastPosition = transform.position;
     }
 
     private void UpdateForces()
     {
-
         float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
         float neighborAvoidMult = -0.013f;
         if (heightFixed)
@@ -122,53 +101,6 @@ public class AutonomousDrone : Follower {
 
         m_body.AddForce(repulseDir * Mathf.Min(targetAttraction, maxPower) * Time.deltaTime );
         currentSpeed = m_body.velocity.magnitude;
-        // TODO: fix timestep - not active!
-
-    }
-
-    private IEnumerator UpdateWithFixedHz(float hz) {
-        double dt = 1 / hz;
-
-        float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
-        float neighborAvoidMult = -0.005f;
-        if (heightFixed) {
-            neighborAvoidPrw = 4;
-            neighborAvoidMult = -0.013f;
-        }
-
-        yield return new WaitUntil(() => m_sensor.CloseEntities != null);
-        Stopwatch sw = new Stopwatch();
-        while (true) {
-            //deltaTime = sw.Elapsed.TotalSeconds;
-            sw.Reset();
-            sw.Start();
-            float acc = 0;
-            Vector3 dir = Vector3.zero;
-
-            foreach (Transform item in m_sensor.CloseEntities) {
-                Vector3 dirFollowerer = item.transform.position - transform.position;
-                float mag = dirFollowerer.magnitude;
-                if (mag < (2 * m_sensorRadius)) {
-                    dir += dirFollowerer.normalized * Mathf.Pow((mag - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
-                    strength = dir.magnitude;
-                }
-            }
-            dir += (m_attractor.transform.position - transform.position).normalized;
-            acc += (m_attractor.transform.position - transform.position).magnitude * 25 + rndOffsetAcceleration;
-
-            m_body.AddForce(dir * Mathf.Min(acc, maxPower) * (float)dt);
-            currentSpeed = m_body.velocity.magnitude;
-            // TODO: fix timestep - not active!
-
-            yield return new WaitUntil(() => sw.Elapsed.TotalSeconds >= dt);
-        }
-    }
-
-    private void UpdateLineRenererTrail() {
-        smoothTrailPoint = Vector3.Lerp(smoothTrailPoint, m_lastPosition + (transform.position - m_lastPosition), Time.deltaTime * 5);
-        m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1,  smoothTrailPoint);
-
     }
 
     public void EnableSensorRangeDrawing(bool draw) {
@@ -196,5 +128,4 @@ public class AutonomousDrone : Follower {
                 m_attractor = l.transform;
         }
     }
-
 }

@@ -76,10 +76,10 @@ public class Leader : MonoBehaviour {
 
     private void OnMarked(Leader target) {
         if (target == this) {
-            if (!marked) {
+            //if (!marked) {
                 leaderRenderer.material.color = markedColor;
                 marked = true;
-            }
+            //}
         }
         else {
             if (marked) {

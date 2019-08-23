@@ -30,7 +30,6 @@ public class LeaderMarker : MonoBehaviour {
             Vector3 t = (hi.point);
             t = Camera.main.transform.worldToLocalMatrix * t;
             t.z = (Camera.main.transform.worldToLocalMatrix * dragStartPos).z;
-            print("--- " + t);
 
             LeaderDraggedEvent(Camera.main.transform.localToWorldMatrix * t);
         }

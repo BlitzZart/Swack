@@ -35,7 +35,7 @@ public class HiResScreenShots : MonoBehaviour {
 
             // don't write image
             camera.targetTexture = null;
-            RenderTexture.active = null; // JC: added to avoid errors
+            RenderTexture.active = null;
             //Destroy(rt);
             byte[] bytes = screenShot.EncodeToPNG();
             string filename = ScreenShotName(camera.pixelWidth, camera.pixelHeight);

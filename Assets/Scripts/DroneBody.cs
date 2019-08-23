@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// only used to detect collisions
+/// </summary>
 public class DroneBody : MonoBehaviour {
     private SphereCollider sphere;
     public Renderer modelRenderer;
-
-    private void Start() {
-        //modelRenderer.material.color = Color.cyan;
-    }
 
     private void OnCollisionEnter(Collision collision) {
         DroneBody d = collision.gameObject.GetComponentInChildren<DroneBody>();

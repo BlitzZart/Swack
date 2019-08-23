@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// DroneGenerator is used to generate swarms
+/// </summary>
 public class DroneGenerator : MonoBehaviour {
     static bool heightIsFixed = false;
     static bool directedDrones = false;

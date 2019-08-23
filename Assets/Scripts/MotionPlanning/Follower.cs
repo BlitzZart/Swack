@@ -7,6 +7,10 @@ public class Follower : MonoBehaviour
     protected float m_rndAlpha;
 
     protected Transform m_attractor;
+    public Transform Attractor {
+        get { return m_attractor; }
+    }
+
     protected Rigidbody m_body;
     protected LineRenderer m_line;
 
@@ -15,13 +19,13 @@ public class Follower : MonoBehaviour
     public bool heightFixed = false;
     public int ID;
 
+    #region unity callbacks
     protected virtual void Start()
     {
         m_line = GetComponent<LineRenderer>();
         m_body = GetComponent<Rigidbody>();
         m_rndAlpha = Random.Range(0.9f, 1.1f); // actually unused
     }
-
     protected virtual void Update()
     {
         if (drawLineToTarget)
@@ -29,12 +33,13 @@ public class Follower : MonoBehaviour
             UpdateLineRenererTarget();
         }
     }
+    #endregion
 
+    #region public
     public void SetAttractor(Leader leader)
     {
         m_attractor = leader.transform;
     }
-
     public void FixHeight(bool fix)
     {
         if (fix)
@@ -53,10 +58,13 @@ public class Follower : MonoBehaviour
         drawPath = draw;
         m_line.enabled = drawPath;
     }
+    #endregion
 
+    #region private
     private void UpdateLineRenererTarget()
     {
         m_line.SetPosition(0, transform.position);
         m_line.SetPosition(1, m_attractor.transform.position);
     }
+    #endregion
 }

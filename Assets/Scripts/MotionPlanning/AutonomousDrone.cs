@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 
+
 public class AutonomousDrone : Follower {
     [SerializeField]
     private float currentSpeed;
     [SerializeField]
-    private float strength;
+    private float maxSpeed;
     [SerializeField]
-    private float targetAttraction;
-    [SerializeField]
+    private float maxPower = 200;
+    private float attractionStrength;
     private float weakenWhenCloseFactor;
 
-    public float maxPower = 400;
+    private float m_targetDistance;
+    public float TargetDistance
+        {
+        get { return m_targetDistance; }
+    }
 
     public bool drawPath_Debug = false;
     public bool drawVelocity_Debug = false;
-
     public bool showSensor;
 
     private Sensor m_sensor;
@@ -23,15 +27,15 @@ public class AutonomousDrone : Follower {
     private Vector3 smoothTrailPoint;
 
     // used to generate diveristy
-    private float rndOffsetAcceleration;
+    private float rndAttractionFactor;
 
+    #region unity callbacks
     protected override void Start () {
         base.Start();
 
         // standard assignment with only one leader in scene
-        if (m_attractor == null)
-            m_attractor = FindObjectOfType<Leader>().transform;
-
+        //if (m_attractor == null)
+        //    m_attractor = FindObjectOfType<Leader>().transform;
 
         m_sensor = GetComponentInChildren<Sensor>();
         m_sensorRadius = m_sensor.GetComponent<SphereCollider>().radius * m_sensor.transform.localScale.x;
@@ -40,7 +44,7 @@ public class AutonomousDrone : Follower {
 
         if (!showSensor)
             m_sensor.GetComponent<Renderer>().enabled = false;
-        rndOffsetAcceleration = UnityEngine.Random.Range(-2.0f, 2.0f);
+        rndAttractionFactor = UnityEngine.Random.Range(-1.0f, 1.0f);
 
         FixHeight(heightFixed);
 	}
@@ -58,48 +62,54 @@ public class AutonomousDrone : Follower {
 
         m_lastPosition = transform.position;
     }
+    #endregion
 
     private void UpdateForces()
     {
-        float neighborAvoidPrw = 4; // Math.Pow(..., neighborAvoidPrw)
-        float neighborAvoidMult = -0.013f;
-        if (heightFixed)
-        {
-            neighborAvoidPrw = 4;
-            neighborAvoidMult = -0.013f;
-        }
+        float neighborAvoidPwr = 3;
+        float neighborAvoidScale = -0.03f;
 
-        targetAttraction = 0;
-        Vector3 repulseDir = Vector3.zero;
+        attractionStrength = 0;
+        Vector3 overallSum = Vector3.zero;
 
+        // sum repulsive part
         foreach (Transform item in m_sensor.CloseEntities)
         {
             Vector3 dirFollowerer = item.transform.position - transform.position;
             float mag = dirFollowerer.magnitude;
             if (mag < (2 * m_sensorRadius))
             {
-                repulseDir += dirFollowerer.normalized * Mathf.Pow((mag - 2 * m_sensorRadius), neighborAvoidPrw) * neighborAvoidMult;
-                strength = repulseDir.magnitude;
+                overallSum += dirFollowerer.normalized * 
+                    Mathf.Pow((Mathf.Clamp(m_sensorRadius - mag, 1, m_sensorRadius)), neighborAvoidPwr) *
+                    neighborAvoidScale;
             }
         }
 
-        float targetDistance = Vector3.Distance(m_attractor.transform.position, transform.position);
+        m_targetDistance = Vector3.Distance(m_attractor.transform.position, transform.position);
 
-        repulseDir += (m_attractor.transform.position - transform.position).normalized;
+        // add attraction
+        overallSum += (m_attractor.transform.position - transform.position).normalized;
 
-        // weaken attraction to target if closer than x meter
-        weakenWhenCloseFactor = Mathf.Clamp(targetDistance / 5.0f, 0.5f, 1.0f);
-
-        // minTargetAttraction helps to approach faster
+        // minTargetAttraction helps to approach faster when close (<1m)
         float minTargetAttraction = 0;
-        if (targetDistance > 0.5f)
+        if (m_targetDistance > 1.0f)
         {
             minTargetAttraction = 20.0f;
         }
 
-        targetAttraction += Mathf.Max(targetDistance * 25 * weakenWhenCloseFactor + rndOffsetAcceleration, minTargetAttraction);
+        attractionStrength += Mathf.Max(m_targetDistance * 25.0f + rndAttractionFactor, minTargetAttraction);
 
-        m_body.AddForce(repulseDir * Mathf.Min(targetAttraction, maxPower) * Time.deltaTime );
+        // move by force
+        m_body.AddForce(overallSum * Mathf.Min(attractionStrength, maxPower) * Time.deltaTime );
+        // limit speed, 0 = no speed limit
+        if (maxSpeed != 0 && m_body.velocity.magnitude > maxSpeed)
+        {
+            m_body.velocity = m_body.velocity.normalized * maxSpeed;
+        }
+
+        // [expermimental] using transformation instead of applying force to a ridgib body
+        //transform.Translate(Vector3.ClampMagnitude(repulseSum * Mathf.Min(attracgionSum, maxPower), maxSpeed) * Time.deltaTime);
+
         currentSpeed = m_body.velocity.magnitude;
     }
 

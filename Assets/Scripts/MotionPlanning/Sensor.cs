@@ -17,7 +17,6 @@ public class Sensor : MonoBehaviour {
         m_close = new List<Transform>();
         m_obstacles = new List<Transform>();
     }
-
     private void OnTriggerEnter(Collider other) {
         AutonomousDrone f = other.GetComponentInParent<AutonomousDrone>();
         if (f != null) {
@@ -38,7 +37,6 @@ public class Sensor : MonoBehaviour {
             }
         }
     }
-
     private void OnTriggerExit(Collider other) {
         AutonomousDrone f = other.GetComponentInParent<AutonomousDrone>();
         if (f != null) {

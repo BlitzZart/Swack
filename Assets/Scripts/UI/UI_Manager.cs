@@ -25,4 +25,9 @@ public class UI_Manager : MonoBehaviour {
                 item.enabled = m_showUI;
         }
     }
+
+    public void QuitApp()
+    {
+        Application.Quit();
+    }
 }

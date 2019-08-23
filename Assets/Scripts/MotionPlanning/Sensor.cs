@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Sensor keeps track of nearby drones
+/// </summary>
 public class Sensor : MonoBehaviour {
     private List<Transform> m_close;
     private List<Transform> m_obstacles;

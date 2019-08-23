@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_DroneSetup : MonoBehaviour

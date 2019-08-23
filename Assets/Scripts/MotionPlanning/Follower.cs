@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

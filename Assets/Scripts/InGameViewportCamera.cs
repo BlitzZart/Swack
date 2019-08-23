@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using UnityEngine;
 
 /// <summary>
 /// A simple component which enables in-game navigation with a 3D camera

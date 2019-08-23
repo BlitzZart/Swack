@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using UnityEngine;
 
 public class FollowTransform : MonoBehaviour {
     public Transform target;

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CentralProcessor : MonoBehaviour

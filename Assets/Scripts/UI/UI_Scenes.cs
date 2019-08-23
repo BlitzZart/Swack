@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UI_Scenes : MonoBehaviour

@@ -47,28 +47,38 @@ public class InGameViewportCamera : MonoBehaviour {
             translation = new Vector3(0, 0, -Input.GetAxis("Mouse Y") * moveSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            followAttractor.FollowAttractor(!followAttractor.IsFollowing);
+        if (followAttractor != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                followAttractor.FollowAttractor(!followAttractor.IsFollowing);
+
+                if (!followAttractor.IsFollowing)
+                    Initialize();
+            }
 
             if (!followAttractor.IsFollowing)
-                Initialize();
+            {
+                // translate
+                if (Input.GetKey(upKey))
+                {
+                    translation += new Vector3(0, 0, moveSpeed) * Time.deltaTime * 50;
+                }
+                else if (Input.GetKey(downKey))
+                {
+                    translation += new Vector3(0, 0, -moveSpeed * Time.deltaTime * 50);
+                }
+                if (Input.GetKey(leftKey))
+                {
+                    translation += new Vector3(-moveSpeed * Time.deltaTime * 50, 0, 0);
+                }
+                else if (Input.GetKey(rightKey))
+                {
+                    translation += new Vector3(moveSpeed * Time.deltaTime * 50, 0, 0);
+                }
+            }
         }
 
-        if (!followAttractor.IsFollowing) {
-            // translate
-            if (Input.GetKey(upKey)) {
-                translation += new Vector3(0, 0, moveSpeed) * Time.deltaTime * 50;
-            }
-            else if (Input.GetKey(downKey)) {
-                translation += new Vector3(0, 0, -moveSpeed * Time.deltaTime * 50);
-            }
-            if (Input.GetKey(leftKey)) {
-                translation += new Vector3(-moveSpeed * Time.deltaTime * 50, 0, 0);
-            }
-            else if (Input.GetKey(rightKey)) {
-                translation += new Vector3(moveSpeed * Time.deltaTime * 50, 0, 0);
-            }
-        }
         // drag
         if (Input.GetMouseButton(0)) {
             translation = new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"), 0) * moveSpeed;

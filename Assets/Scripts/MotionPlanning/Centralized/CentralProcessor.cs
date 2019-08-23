@@ -4,7 +4,6 @@ using UnityEngine;
 public class CentralProcessor : MonoBehaviour
 {
     public List<CentralizedDrone> drones;
-    public Transform target;
 
     public void AddDrone(CentralizedDrone drone)
     {

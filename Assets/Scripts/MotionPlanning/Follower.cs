@@ -6,13 +6,10 @@ public class Follower : MonoBehaviour
 {
     protected float m_rndAlpha;
 
-    protected Transform m_attractor;
-    public Transform Attractor {
-        get { return m_attractor; }
-    }
-
     protected Rigidbody m_body;
     protected LineRenderer m_line;
+
+    public Transform Attractor;
 
     public bool drawPath = false;
     public bool drawLineToTarget = false;
@@ -38,7 +35,7 @@ public class Follower : MonoBehaviour
     #region public
     public void SetAttractor(Leader leader)
     {
-        m_attractor = leader.transform;
+        Attractor = leader.transform;
     }
     public void FixHeight(bool fix)
     {
@@ -63,8 +60,12 @@ public class Follower : MonoBehaviour
     #region private
     private void UpdateLineRenererTarget()
     {
+        if (Attractor == null)
+        {
+            return;
+        }
         m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1, m_attractor.transform.position);
+        m_line.SetPosition(1, Attractor.transform.position);
     }
     #endregion
 }

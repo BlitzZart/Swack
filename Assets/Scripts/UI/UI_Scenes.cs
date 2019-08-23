@@ -5,14 +5,14 @@ public class UI_Scenes : MonoBehaviour
 {
     public void LoadAutonomOmni()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Autonomous");
     }
     public void LoadAutonomDirect()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("AutonomousDirected");
     }
     public void LoadCentralized()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Centralized");
     }
 }

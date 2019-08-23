@@ -7,6 +7,14 @@ public class CentralizedDrone : Follower
     [SerializeField]
     private Vector3 m_attraction;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        CentralProcessor cp = FindObjectOfType<CentralProcessor>();
+        cp.AddDrone(this);
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -23,8 +31,13 @@ public class CentralizedDrone : Follower
 
     public void ApplyResault()
     {
-        Vector3 attDir = (m_attractor.position - transform.position);
-        attDist = Vector3.Distance(m_attractor.position, transform.position);
+        if (Attractor == null)
+        {
+            return;
+        }
+
+        Vector3 attDir = (Attractor.position - transform.position);
+        attDist = Vector3.Distance(Attractor.position, transform.position);
         m_attraction = attDir / (attDist);
 
         float atTargetRepulsionUpscale = 1;

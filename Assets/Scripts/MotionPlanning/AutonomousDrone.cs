@@ -66,6 +66,10 @@ public class AutonomousDrone : Follower {
 
     private void UpdateForces()
     {
+        if (Attractor == null)
+        {
+            return;
+        }
         float neighborAvoidPwr = 3;
         float neighborAvoidScale = -0.03f;
 
@@ -85,10 +89,10 @@ public class AutonomousDrone : Follower {
             }
         }
 
-        m_targetDistance = Vector3.Distance(m_attractor.transform.position, transform.position);
+        m_targetDistance = Vector3.Distance(Attractor.transform.position, transform.position);
 
         // add attraction
-        overallSum += (m_attractor.transform.position - transform.position).normalized;
+        overallSum += (Attractor.transform.position - transform.position).normalized;
 
         // minTargetAttraction helps to approach faster when close (<1m)
         float minTargetAttraction = 0;
@@ -127,15 +131,15 @@ public class AutonomousDrone : Follower {
 
         foreach (Leader l in leaders) {
             if (l.ID == ID)
-                m_attractor = l.transform;
+                Attractor = l.transform;
         }
         // founde one
-        if (m_attractor)
+        if (Attractor)
             return;
 
         foreach (Leader l in leaders) {
             if (l.ID == 0)
-                m_attractor = l.transform;
+                Attractor = l.transform;
         }
     }
 }

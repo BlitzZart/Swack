@@ -95,12 +95,12 @@ public class DroneGenerator : MonoBehaviour {
 
                 f.SetAttractor(l);
 
-                if (isCentralized)
-                {
-                    CentralizedDrone cd = (CentralizedDrone)f;
-                    cd.SetAttractor(l);
-                    cp.AddDrone(cd);                 
-                }
+                //if (isCentralized)
+                //{
+                //    CentralizedDrone cd = (CentralizedDrone)f;
+                //    cd.SetAttractor(l);
+                //    cp.AddDrone(cd);                 
+                //}
             }
 
             nextPos.z = 0;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33455762163122316}
   - component: {fileID: 23705420384251404}
   - component: {fileID: 135226355051024590}
-  m_Layer: 13
+  m_Layer: 31
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 114584787529711978}
   - component: {fileID: 54252144547596656}
   - component: {fileID: 135640628971560354}
-  m_Layer: 13
+  m_Layer: 31
   m_Name: Leader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833114719392450}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2

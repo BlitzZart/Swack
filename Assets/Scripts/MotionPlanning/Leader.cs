@@ -11,7 +11,8 @@ using UnityEngine;
 /// can be controlled via key input
 /// is default target for drones (followers) - if not set to other tartet
 /// </summary>
-public class Leader : MonoBehaviour {
+public class Leader : MonoBehaviour
+{
 
     private Color idleColor, markedColor;
     private Renderer leaderRenderer;
@@ -22,7 +23,8 @@ public class Leader : MonoBehaviour {
 
     private float speed = 25;
 
-    void Start() {
+    void Start()
+    {
         leaderRenderer = GetComponentInChildren<Renderer>();
         idleColor = leaderRenderer.material.color;
 
@@ -31,62 +33,76 @@ public class Leader : MonoBehaviour {
         LeaderMarker.LeaderDraggedEvent += OnDragged;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         LeaderMarker.LeaderMarkedEvent -= OnMarked;
         LeaderMarker.LeaderDraggedEvent -= OnDragged;
     }
 
-    private void Update() {
-        if (!marked) {
+    private void Update()
+    {
+        if (!marked)
+        {
             return;
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
             oldPos = transform.position;
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+        if (Input.GetKey(KeyCode.UpArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
             transform.Translate(0, speed * Time.deltaTime, 0); // UP
         }
-        else if (Input.GetKey(KeyCode.UpArrow)) {
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
             transform.Translate(0, 0, speed * Time.deltaTime); // BACK
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+        if (Input.GetKey(KeyCode.DownArrow) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
             transform.Translate(0, -speed * Time.deltaTime, 0);// DOWN
         }
-        else if (Input.GetKey(KeyCode.DownArrow)) {
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
             transform.Translate(0, 0, -speed * Time.deltaTime);// FORWARD
         }
 
 
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
             transform.Translate(-speed * Time.deltaTime, 0, 0); // LEFT
         }
         else
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
             transform.Translate(speed * Time.deltaTime, 0, 0); // RIGHT
         }
 
     }
 
-    private void OnDragged(Vector3 target) {
-        if (!marked) {
+    private void OnDragged(Vector3 target)
+    {
+        if (!marked)
+        {
             return;
         }
         transform.position = target;
     }
 
 
-    private void OnMarked(Leader target) {
-        if (target == this) {
-            //if (!marked) {
-                leaderRenderer.material.color = markedColor;
-                marked = true;
-            //}
+    private void OnMarked(Leader target)
+    {
+        if (target == this)
+        {
+            leaderRenderer.material.color = markedColor;
+            marked = true;
         }
-        else {
-            if (marked) {
+        else
+        {
+            if (marked)
+            {
                 leaderRenderer.material.color = idleColor;
                 marked = false;
             }

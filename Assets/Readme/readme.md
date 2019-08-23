@@ -12,12 +12,13 @@ Properly set up and tweaked this leads to pretty fluent and also collision-free 
 
 ### One Leader and one Autonomous drone
 1. Import Package
-    * You can start playing around with the test scenes right away
-    * Add scenes to build settings to enable scene switch buttons (Autonomous, AutonomousDirected, and Centralized)
-2. Add **AutonomousDrone** to you scene
-3. Add **Leader** to you scene
-4. Set **Attractor** of **AutonomousDrone** by dragging **Leader GameObject** in Inspector
-5. Hit Play
+2. Set Layers (30: Droen, 31: Leader) and set Layer Collision Matrix (Drone only by Drone and Leader only by Leader). See images 
+    * Now you can start playing around with the test scenes right away.
+    * Add scenes to build settings to enable scene switch buttons (Autonomous, AutonomousDirected, and Centralized). See images "01_AddLayerNames.JPG" and "02_SetMap.JPG"
+3. To integrate in you scenes: add **AutonomousDrone** to you scene
+4. Add **Leader** to you scene
+5. Set **Attractor** of **AutonomousDrone** by dragging **Leader GameObject** in Inspector
+6. Hit Play
 * Works the same with **AutonomousDroneDirected**
     * only that **AutonomousDroneDirected** rotates its model torwards the **Leader**.
 
@@ -27,3 +28,7 @@ Just add more **Drones** and assign the same **Leader**
 ### Centralized setup
 Same as the Autonomous setup. In addition, add a **CentralizedProcessor** to you scene.
 Don't forget to assign the **Leader**/**Attractor** of the **Drone**. As the centralized implementation checks every agent against every agent in each tick, its performance extremely decreases by increasing the number of agents. The autonomous implementation is more efficient.
+
+## Layer/Physics setup
+![Set Map](02_SetMap.JPG)
+![Set Layer Names](01_AddLayerNames.JPG)

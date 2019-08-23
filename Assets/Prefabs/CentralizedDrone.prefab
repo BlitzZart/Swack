@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4436610715913364}
   - component: {fileID: 33510404527509550}
   - component: {fileID: 23173319752072936}
-  m_Layer: 11
+  m_Layer: 30
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 114215663352695660}
   - component: {fileID: 135660787310590050}
   - component: {fileID: 120605902270630486}
-  m_Layer: 11
+  m_Layer: 30
   m_Name: CentralizedDrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23932198886694178}
   - component: {fileID: 135224669718380016}
   - component: {fileID: 114325343444633354}
-  m_Layer: 11
+  m_Layer: 30
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4436610715913364}
   - component: {fileID: 33510404527509550}
   - component: {fileID: 23173319752072936}
-  m_Layer: 11
+  m_Layer: 30
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 114215663352695660}
   - component: {fileID: 135660787310590050}
   - component: {fileID: 120605902270630486}
-  m_Layer: 11
+  m_Layer: 30
   m_Name: AutonomousDrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8606820ff3524f44cbb1a12f9084fc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Attractor: {fileID: 0}
   drawPath: 1
   drawLineToTarget: 1
   heightFixed: 1

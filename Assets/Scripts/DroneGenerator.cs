@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// DroneGenerator is used to generate swarms
 /// </summary>
-public class DroneGenerator : MonoBehaviour {
+public class DroneGenerator : MonoBehaviour
+{
     static bool heightIsFixed = false;
     static bool directedDrones = false;
     static bool singleTarget = false;
@@ -29,30 +30,41 @@ public class DroneGenerator : MonoBehaviour {
     Vector3 nextPos;
 
     #region unity callbacks
-    private void Start () {
-        if (heightIsFixed) {
+    private void Start()
+    {
+        if (heightIsFixed)
+        {
             dronePrefab.heightFixed = true;
             Leader[] leaders = FindObjectsOfType<Leader>();
 
-            foreach (Leader leader in leaders) {
+            foreach (Leader leader in leaders)
+            {
                 leader.transform.position = new Vector3(leader.transform.position.x, 0, leader.transform.position.z);
             }
 
 
-        } else {
+        }
+        else
+        {
             dronePrefab.heightFixed = false;
         }
 
         drones = new List<Follower>();
         leaders = new List<Leader>();
-        if (COLUMS != 0) {
+        if (COLUMS != 0)
+        {
             colums = COLUMS;
-        } else {
+        }
+        else
+        {
             COLUMS = colums;
         }
-        if (ROWS != 0) {
+        if (ROWS != 0)
+        {
             rows = ROWS;
-        } else {
+        }
+        else
+        {
             ROWS = rows;
         }
 
@@ -73,8 +85,10 @@ public class DroneGenerator : MonoBehaviour {
 
         CentralProcessor cp = FindObjectOfType<CentralProcessor>();
 
-        for (int c = 0; c < colums; c++) {
-            for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < colums; c++)
+        {
+            for (int r = 0; r < rows; r++)
+            {
                 Follower f = Instantiate(dronePrefab, startPos + nextPos, Quaternion.identity);
                 f.transform.parent = droneHolder.transform;
 
@@ -94,59 +108,64 @@ public class DroneGenerator : MonoBehaviour {
 
 
                 f.SetAttractor(l);
-
-                //if (isCentralized)
-                //{
-                //    CentralizedDrone cd = (CentralizedDrone)f;
-                //    cd.SetAttractor(l);
-                //    cp.AddDrone(cd);                 
-                //}
             }
 
             nextPos.z = 0;
             nextPos.x += offset;
         }
-	}
+    }
 
-    private void Update() {
-        if (Input.GetKey(KeyCode.Alpha1)) {
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
             Restart(2, 2);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha2)) {
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
             Restart(5, 5);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha3)) {
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
             Restart(10, 10);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha4)) {
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
             Restart(20, 10);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha5)) {
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
             Restart(20, 20);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha6)) {
+        if (Input.GetKey(KeyCode.Alpha6))
+        {
             Restart(2, 200);
         }
         else
-        if (Input.GetKey(KeyCode.Alpha7)) {
+        if (Input.GetKey(KeyCode.Alpha7))
+        {
             Restart(25, 20);
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
             ToggleSensorVisualization();
         }
-        if (Input.GetKeyDown(KeyCode.T)) {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
             ToggleTragetLineVisualization();
         }
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
             ToggleFixedHeight();
         }
-        if (Input.GetKeyDown(KeyCode.U)) {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
             ShuffleLeaders();
         }
         if (Input.GetKeyDown(KeyCode.I))
@@ -185,7 +204,7 @@ public class DroneGenerator : MonoBehaviour {
         singleTarget = !singleTarget;
         if (singleTarget)
         {
-            foreach(Follower f in drones)
+            foreach (Follower f in drones)
             {
                 f.SetAttractor(leitHammel);
             }
@@ -198,7 +217,7 @@ public class DroneGenerator : MonoBehaviour {
             }
         }
 
-               
+
     }
 
     public void ShuffleLeaders()
@@ -226,11 +245,20 @@ public class DroneGenerator : MonoBehaviour {
         }
     }
 
-    private void Restart(int c, int r) {
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) {
-            heightIsFixed = true;
-        } else {
-            heightIsFixed = false;
+    public void Restart(int c, int r, bool fixHight = false)
+    {
+        heightIsFixed = fixHight;
+
+        if (heightIsFixed == false)
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            {
+                heightIsFixed = true;
+            }
+            else
+            {
+                heightIsFixed = false;
+            }
         }
 
         COLUMS = c;

@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Autonomous.unity
+    path: Assets/Swarmify/Scenes/Autonomous.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/AutonomousDirected.unity
+    path: Assets/Swarmify/Scenes/AutonomousDirected.unity
     guid: 6220325007ef0f74ab8c17eebf155c46
   - enabled: 1
-    path: Assets/Scenes/Centralized.unity
+    path: Assets/Swarmify/Scenes/Centralized.unity
     guid: 8b5b3e82e8b7a744aae91259cfe6bde8
   m_configObjects: {}

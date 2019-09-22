@@ -13,7 +13,7 @@ Properly set up and tweaked this leads to pretty fluent and also collision-free 
 ## Basic set up guide
 ### One Leader and one Autonomous drone
 1. Import Package
-2. Set Layers (30: Droen, 31: Leader) and set Layer Collision Matrix (Drone only by Drone and Leader only by Leader). See images See images "01_AddLayerNames.JPG" and "02_SetMap.JPG"
+2. **Set Layers** (30: Droen, 31: Leader) and set **Layer Collision Matrix** (Drone only by Drone and *Leader only by Leader). See images See images "01_AddLayerNames.JPG" and "02_SetMap.JPG"
 3. Add scenes to build settings to enable scene switch buttons (Autonomous, AutonomousDirected, and Centralized). See image "03_ScenesInBuild.JPG".
 
 * Now you can start playing around with the test scenes right away.
@@ -35,14 +35,14 @@ Don't forget to assign the **Leader**/**Attractor** of the **Drone**. As the cen
 ## Scene and Layer/Physics setup
 Add scenes in Build Settings.
 
-![Set Scenes](03_ScenesInBuild.JPG)
+![Set Scenes](03_ScenesInBuild.png)
 
 
 Set Layer Names
 
-![Set Layer Names](01_AddLayerNames.JPG)
+![Set Layer Names](01_AddLayerNames.png)
 
 
 Set Layer Collision Matrix
 
-![Set Map](02_SetMap.JPG)
+![Set Map](02_SetMap.png)

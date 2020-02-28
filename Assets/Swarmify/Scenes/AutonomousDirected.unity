@@ -1891,7 +1891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411081109165312, guid: 80268765fad5e4e4ab7e2abc8824adbd, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 33455762163122316, guid: 80268765fad5e4e4ab7e2abc8824adbd,
         type: 3}
@@ -2854,65 +2854,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 967733559}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1714197411
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1714197414}
-  - component: {fileID: 1714197413}
-  - component: {fileID: 1714197412}
-  m_Layer: 0
-  m_Name: ScreenShooter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1714197412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714197411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2269fc8003776fa439aa93ac9186a8ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 282840813}
-  thePainting: {fileID: 0}
-  thePaintingRT: {fileID: 0}
---- !u!114 &1714197413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714197411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f8890278c5351a42bae9e82ed1ad2ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1714197414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714197411}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7561035, y: -1.3929291, z: -21.850185}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778547923
 GameObject:
   m_ObjectHideFlags: 0

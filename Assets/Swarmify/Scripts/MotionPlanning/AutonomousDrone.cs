@@ -2,6 +2,7 @@
 // Contact: blitzzartgames@gmail.com
 // Author: Daniel Rammer
 
+using System;
 using UnityEngine;
 
 namespace Swarmify
@@ -16,6 +17,9 @@ namespace Swarmify
         private float maxPower = 200;
         private float attractionStrength;
         private float weakenWhenCloseFactor;
+        [SerializeField]
+        private float m_sightRadius = 10;
+        private float m_oldSightRadius = 10;
 
         private float m_targetDistance;
         public float TargetDistance {
@@ -53,6 +57,11 @@ namespace Swarmify
             rndAttractionFactor = UnityEngine.Random.Range(-1.0f, 1.0f);
 
             FixHeight(heightFixed);
+
+            UI_SliderSight.SightDistanceChangedEvent += OnSensorDistanceChanged;
+            UI_SliderMaxSpeed.MaxSpeedChangedEvent += OnMaxSpeedChanged;
+            UI_SliderMaxPower.MaxPowerChangedEvent += OnMaxPowerChanged;
+            m_oldSightRadius = m_sightRadius;
         }
         protected override void Update()
         {
@@ -69,6 +78,18 @@ namespace Swarmify
             UpdateForces();
 
             m_lastPosition = transform.position;
+
+            if (m_sightRadius != m_oldSightRadius)
+            {
+                m_oldSightRadius = m_sightRadius;
+                m_sensor.transform.localScale = Vector3.one * m_sightRadius;
+            }
+        }
+        private void OnDestroy()
+        {
+            UI_SliderSight.SightDistanceChangedEvent -= OnSensorDistanceChanged;
+            UI_SliderMaxSpeed.MaxSpeedChangedEvent -= OnMaxSpeedChanged;
+            UI_SliderMaxPower.MaxPowerChangedEvent -= OnMaxPowerChanged;
         }
         #endregion
 
@@ -156,6 +177,22 @@ namespace Swarmify
             //transform.Translate(Vector3.ClampMagnitude(repulseSum * Mathf.Min(attracgionSum, maxPower), maxSpeed) * Time.deltaTime);
 
             currentSpeed = m_body.velocity.magnitude;
+        }
+        #endregion
+
+        #region event listeners
+        private void OnSensorDistanceChanged(float value)
+        {
+            m_sightRadius = value;
+        }
+        private void OnMaxSpeedChanged(float value)
+        {
+            maxSpeed = value;
+        }
+
+        private void OnMaxPowerChanged(float value)
+        {
+            maxPower = value;
         }
         #endregion
 

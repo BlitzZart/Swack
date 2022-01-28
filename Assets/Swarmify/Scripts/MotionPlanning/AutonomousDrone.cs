@@ -35,7 +35,7 @@ namespace Swarmify
         private Vector3 m_lastPosition;
         private Vector3 smoothTrailPoint;
 
-        // used to generate diveristy
+        // used to generate diversity
         private float rndAttractionFactor;
 
         #region unity callbacks
@@ -101,7 +101,7 @@ namespace Swarmify
         }
 
         /// <summary>
-        /// sets drone to traget with same ID if available
+        /// sets drone to target with same ID if available
         /// </summary>
         /// <param name="f"></param>
         public void HardcodedCustomLeaderAssignment()
@@ -113,7 +113,7 @@ namespace Swarmify
                 if (l.ID == ID)
                     Attractor = l.transform;
             }
-            // founde one
+            // found one
             if (Attractor)
                 return;
 

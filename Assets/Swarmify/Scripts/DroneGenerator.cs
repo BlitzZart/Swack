@@ -13,7 +13,7 @@ namespace Swarmify
     /// </summary>
     public class DroneGenerator : MonoBehaviour
     {
-        static bool heightIsFixed = false;
+        public static bool heightIsFixed = false;
         static bool directedDrones = false;
         static bool singleTarget = false;
 

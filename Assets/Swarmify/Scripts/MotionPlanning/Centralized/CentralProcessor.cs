@@ -7,27 +7,42 @@ using UnityEngine;
 
 namespace Swarmify
 {
+    public enum ComputationMode
+    {
+        CPU, GPU
+    };
+
     public class CentralProcessor : MonoBehaviour
     {
-        public List<CentralizedDrone> drones;
+        public ComputationMode Mode { get => _mode; }
+        [SerializeField] ComputationMode _mode = ComputationMode.GPU;
+
+        private List<CentralizedDrone> _drones = new List<CentralizedDrone>();
+
+        public List<CentralizedDrone> Drones { get => _drones; }
+
 
         public void AddDrone(CentralizedDrone drone)
         {
-            drones.Add(drone);
+            _drones.Add(drone);
         }
 
         private void FixedUpdate()
         {
-            for (int o = 0; o < drones.Count; o++)
+            if (_mode == ComputationMode.CPU)
             {
-                for (int i = 0; i < drones.Count; i++)
+                // CPU brute force
+                for (int o = 0; o < _drones.Count; o++)
                 {
-                    if (o != i)
+                    for (int i = 0; i < _drones.Count; i++)
                     {
-                        drones[o].AddRepulsor(drones[i].transform.position);
+                        if (o != i)
+                        {
+                            _drones[o].AddRepulsor(_drones[i].transform.position);
+                        }
                     }
+                    _drones[o].ApplyResault();
                 }
-                drones[o].ApplyResault();
             }
         }
     }

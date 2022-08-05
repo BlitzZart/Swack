@@ -1,0 +1,85 @@
+// Swarmify
+// Contact: blitzzartgames@gmail.com
+// Author: Daniel Rammer
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+
+struct Drone
+{
+    float3 dronePos;
+    float3 attrPos;
+};
+
+float maxMovementSpeed;
+float repulsionFarPower;
+float repulsionClosePower;
+float repulsionScale;
+float sensingDistance;
+bool fixHeight;
+
+RWStructuredBuffer<Drone> drones;
+
+[numthreads(10,1,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float originalY = drones[id.x].dronePos.y;
+
+    // repulsion
+    float3 repulsion;
+    for (uint i = 0; i < drones.Length; i++)
+    {
+        if (id.x != i) // exclude self
+        {
+            float3 repDir = drones[id.x].dronePos - drones[i].dronePos;
+            float repDist = clamp(length(repDir),0.1f, 100.0f);
+
+            // WIP: dynamic repulsion
+            //if (repDist < sensingDistance)
+            //{
+            //    float blend = abs(pow(repDist / sensingDistance, 3));
+            //    float p = lerp(repulsionClosePower, repulsionFarPower, blend);
+            //    repulsion += repDir / pow(repDist, p) * repulsionScale * (2.0f / repDist);
+            //}
+
+            if (repDist < 2.0f)
+            {
+                repulsion += repDir / pow(repDist, repulsionClosePower) * repulsionScale * 10.0f;
+            }
+            else if (repDist < sensingDistance)
+            {
+                repulsion += repDir / pow(repDist, repulsionFarPower) * repulsionScale;
+            }
+        }
+    }
+
+    // attraction
+    float3 attrVector = drones[id.x].attrPos - drones[id.x].dronePos;
+    float attrDist = length(attrVector);
+    float attrScale = maxMovementSpeed;
+    if (attrDist < 1.0f)
+    {
+        // slow down when close to target
+        attrScale = clamp(attrDist * 0.1f, 0.01f, maxMovementSpeed);
+
+        // reduce repulsion effect if we are close to target
+        // so we are not pushed away that easy
+        if (attrDist < 0.5f)
+        {
+            repulsion = clamp(repulsion * 0.1f, 0.001f, 10.0f);
+        }
+    }
+    float3 attraction = normalize(attrVector) * attrScale;
+
+    // sum
+    float3 newPositoin = drones[id.x].dronePos + (attraction + repulsion);
+    if (fixHeight)
+    {
+        newPositoin.y = originalY;
+    }
+
+    if (distance(drones[id.x].dronePos, newPositoin) < attrDist)
+    {
+        drones[id.x].dronePos = newPositoin;
+    }
+}

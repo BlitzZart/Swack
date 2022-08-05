@@ -173,7 +173,7 @@ namespace Swarmify
                 m_body.velocity = m_body.velocity.normalized * maxSpeed;
             }
 
-            // [expermimental] using transformation instead of applying force to a ridgib body
+            // [experimental] using transformation instead of applying force to a rigid body
             //transform.Translate(Vector3.ClampMagnitude(repulseSum * Mathf.Min(attracgionSum, maxPower), maxSpeed) * Time.deltaTime);
 
             currentSpeed = m_body.velocity.magnitude;
